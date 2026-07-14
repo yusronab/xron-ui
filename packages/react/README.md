@@ -64,7 +64,13 @@ UI
 
 ---
 
+<details>
+
+<summary>
+
 # Button
+
+</summary>
 
 Buttons allow users to perform actions.
 
@@ -94,9 +100,17 @@ Buttons allow users to perform actions.
 | disabled  | `boolean`                              | `false`     | Disables button       |
 | fullWidth | `boolean`                              | `false`     | Full width button     |
 
+</details>
+
 ---
 
+<details>
+
+<summary>
+
 # Badge
+
+</summary>
 
 Displays status or labels.
 
@@ -124,9 +138,17 @@ Displays status or labels.
 | size    | `"sm" \| "md" \| "lg"`                                                                | `"md"`      | Badge size    |
 | outline | `boolean`                                                                             | `false`     | Outline badge |
 
+</details>
+
 ---
 
+<details>
+
+<summary>
+
 # Spinner
+
+</summary>
 
 Shows a loading indicator.
 
@@ -144,9 +166,17 @@ Shows a loading indicator.
 | ---- | -------------------------------------- | ------- | ------------ |
 | size | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"`  | Spinner size |
 
+</details
+
 ---
 
+<details>
+
+<summary>
+
 # Input
+
+</summary>
 
 Text input field.
 
@@ -167,7 +197,17 @@ Additional props:
 | error     | `boolean` | `false` | Error state      |
 | fullWidth | `boolean` | `false` | Full width input |
 
+</details>
+
+---
+
+<details>
+
+<summary>
+
 # Select
+
+</summary>
 
 A customizable dropdown select component built using a button trigger.
 
@@ -220,7 +260,17 @@ export default function App() {
 | size        | `"sm" \| "md" \| "lg"`    | `"md"`         | Select size                       |
 | onChange    | `(value, option) => void` | -              | Called when an option is selected |
 
+</details>
+
+---
+
+<details>
+
+<summary>
+
 # Textarea
+
+</summary>
 
 A multiline text input component.
 
@@ -237,7 +287,17 @@ A multiline text input component.
 | size  | `"sm" \| "md" \| "lg"` | `"md"`  | Textarea minimum height |
 | error | `boolean`              | `false` | Displays error state    |
 
+</details>
+
+---
+
+<details>
+
+<summary>
+
 # Autocomplete
+
+</summary>
 
 A searchable input component with built-in filtering, keyboard navigation, React Portal support, and asynchronous search.
 
@@ -334,7 +394,17 @@ async function searchUsers(keyword: string) {
 | onChange    | `(value, option) => void`            | -              | Called when an option is selected                     |
 | onSearch    | `(keyword) => void \| Promise<void>` | -              | Called after debounce when the search keyword changes |
 
+</details>
+
+---
+
+<details>
+
+<summary>
+
 # InputPassword
+
+</summary>
 
 A password input component with built-in visibility toggle.
 
@@ -384,7 +454,17 @@ export default function App() {
 
 > `InputPassword` extends all native `<input>` HTML attributes except `type` and the native HTML `size` attribute.
 
+</details>
+
+---
+
+<details>
+
+<summary>
+
 # Checkbox
+
+</summary>
 
 A customizable checkbox component with built-in label support, custom styling, and accessibility.
 
@@ -449,7 +529,17 @@ export default function App() {
 
 > `Checkbox` extends all native `<input type="checkbox">` HTML attributes except `type`, `size`, and the native `onChange` event.
 
+</details>
+
+---
+
+<details>
+
+<summary>
+
 # Radio
+
+</summary>
 
 A customizable radio button component with built-in label support and accessibility.
 
@@ -528,7 +618,17 @@ export default function App() {
 
 > `Radio` extends all native `<input type="radio">` HTML attributes except `type`, `size`, and the native `onChange` event.
 
+</details>
+
+---
+
+<details>
+
+<summary>
+
 # Switch
+
+</summary>
 
 A customizable switch component for toggling between enabled and disabled states.
 
@@ -606,7 +706,17 @@ export default function App() {
 
 > `Switch` extends all native `<input type="checkbox">` HTML attributes except `type`, `size`, and the native `onChange` event.
 
+</details>
+
+---
+
+<details>
+
+<summary>
+
 # InputFile
+
+</summary>
 
 A customizable file input component with image preview, drag & drop support, validation, and render props for full customization.
 
@@ -738,3 +848,7 @@ const [files, setFiles] = useState<File[]>([]);
 | renderClearButton | `(clear: () => void) => ReactNode`       | -          | Custom clear button                         |
 
 > `InputFile` extends all native `<input type="file">` HTML attributes except `type`, `size`, `value`, and the native `onChange` event.
+
+</details>
+
+---
