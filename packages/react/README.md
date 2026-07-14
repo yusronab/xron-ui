@@ -166,7 +166,7 @@ Shows a loading indicator.
 | ---- | -------------------------------------- | ------- | ------------ |
 | size | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"`  | Spinner size |
 
-</details
+</details>
 
 ---
 

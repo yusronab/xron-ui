@@ -32,8 +32,11 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
   ) => {
     const rootRef = useRef<HTMLDivElement>(null);
     const triggerRef = useRef<HTMLButtonElement>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+    const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
     const [open, setOpen] = useState(false);
+    const [activeIndex, setActiveIndex] = useState(-1);
     const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({});
 
     const selectedOption = useMemo(() => {
@@ -46,12 +49,16 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
 
     useEffect(() => {
       function handleOutside(event: MouseEvent) {
+        const target = event.target as Node;
+
         if (
-          rootRef.current &&
-          !rootRef.current.contains(event.target as Node)
+          rootRef.current?.contains(target) ||
+          dropdownRef.current?.contains(target)
         ) {
-          setOpen(false);
+          return;
         }
+
+        setOpen(false);
       }
 
       document.addEventListener("mousedown", handleOutside);
@@ -91,6 +98,63 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
       });
     }
 
+    function handleKeyDown(event: React.KeyboardEvent<HTMLButtonElement>) {
+      if (!open) {
+        if (
+          event.key === "ArrowDown" ||
+          event.key === "ArrowUp" ||
+          event.key === "Enter" ||
+          event.key === " "
+        ) {
+          event.preventDefault();
+          setOpen(true);
+        }
+
+        return;
+      }
+
+      switch (event.key) {
+        case "ArrowDown":
+          event.preventDefault();
+
+          setActiveIndex((prev) => Math.min(prev + 1, options.length - 1));
+          break;
+
+        case "ArrowUp":
+          event.preventDefault();
+
+          setActiveIndex((prev) => Math.max(prev - 1, 0));
+          break;
+
+        case "Enter":
+          event.preventDefault();
+
+          if (activeIndex >= 0) {
+            handleSelect(options[activeIndex]);
+          }
+
+          break;
+
+        case "Escape":
+          event.preventDefault();
+          setOpen(false);
+          break;
+      }
+    }
+
+    useEffect(() => {
+      if (!open) {
+        setActiveIndex(-1);
+        return;
+      }
+
+      const selectedIndex = options.findIndex(
+        (option) => String(option[valueKey]) === String(value),
+      );
+
+      setActiveIndex(selectedIndex >= 0 ? selectedIndex : 0);
+    }, [open, options, value, valueKey]);
+
     useEffect(() => {
       if (!open) return;
 
@@ -100,6 +164,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
         }
       }
 
+      setActiveIndex(-1);
       updateDropdownPosition();
 
       window.addEventListener("resize", updateDropdownPosition);
@@ -112,6 +177,14 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
         document.removeEventListener("keydown", handleKeyDown);
       };
     }, [open]);
+
+    useEffect(() => {
+      if (activeIndex < 0) return;
+
+      optionRefs.current[activeIndex]?.scrollIntoView({
+        block: "nearest",
+      });
+    }, [activeIndex]);
 
     function toggle() {
       if (disabled) return;
@@ -137,13 +210,17 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
         );
       }
 
-      return options.map((option) => (
+      return options.map((option, index) => (
         <SelectOption
           key={String(option[valueKey])}
           option={option}
           labelKey={labelKey}
           selected={String(option[valueKey]) === String(value)}
           onSelect={handleSelect}
+          active={index === activeIndex}
+          optionRef={(node) => {
+            optionRefs.current[index] = node;
+          }}
         />
       ));
     })();
@@ -155,6 +232,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
           type="button"
           disabled={disabled}
           onClick={toggle}
+          onKeyDown={handleKeyDown}
           className={cn(
             selectVariants({
               size,
@@ -175,11 +253,14 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
         {open &&
           createPortal(
             <div
+              ref={dropdownRef}
               style={dropdownStyle}
               className={cn(
                 "max-h-64 overflow-auto border bg-white shadow-md",
                 "dark:border-gray-700",
                 "dark:bg-gray-900",
+                "text-gray-900",
+                "dark:text-gray-100",
                 rounded ? "rounded-2xl" : "rounded-md",
               )}
             >

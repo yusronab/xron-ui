@@ -6,22 +6,25 @@ import {
   roundedStyles,
 } from "./shared";
 
-export const selectVariants = cva(inputBaseStyles, {
-  variants: {
-    size: inputSizeStyles,
+export const selectVariants = cva(
+  [...inputBaseStyles, "flex", "w-full", "items-center", "justify-between"],
+  {
+    variants: {
+      size: inputSizeStyles,
 
-    rounded: roundedStyles,
+      rounded: roundedStyles,
 
-    error: {
-      true: inputErrorStyles,
+      error: {
+        true: inputErrorStyles,
 
-      false: "border-gray-300",
+        false: "border-gray-300",
+      },
+    },
+
+    defaultVariants: {
+      size: "md",
+      rounded: false,
+      error: false,
     },
   },
-
-  defaultVariants: {
-    size: "md",
-    rounded: false,
-    error: false,
-  },
-});
+);

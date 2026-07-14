@@ -14,7 +14,7 @@ export const inputBaseStyles = [
 
   "focus-within:border-blue-500",
   "focus-within:ring-4",
-  "focus-within:ring-blue-500/10",
+  "focus-within:ring-blue-500/30",
 
   "disabled:cursor-not-allowed",
   "disabled:opacity-50",
@@ -29,7 +29,7 @@ export const inputBaseStyles = [
 export const inputErrorStyles = [
   "border-red-500",
   "focus-within:border-red-500",
-  "focus-within:ring-red-500/10",
+  "focus-within:ring-red-500/30",
 ] as const;
 
 export const inputSizeStyles = {

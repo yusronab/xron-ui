@@ -5,7 +5,7 @@ import { cn, getStringValue } from "../../utils";
 import { autocompleteVariants } from "../../variants/autocomplete";
 
 import { Spinner } from "../Spinner";
-import { AutocompleteOption } from "./AutocompleteOption";
+import { SelectOption } from "../Select/SelectOption";
 import { CloseIcon } from "../../icons";
 
 import type {
@@ -220,7 +220,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       }
 
       return filteredOptions.map((option, index) => (
-        <AutocompleteOption
+        <SelectOption
           key={getStringValue(option[valueKey])}
           option={option}
           labelKey={labelKey}

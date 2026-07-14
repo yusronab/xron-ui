@@ -224,7 +224,7 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>(
                 rounded,
                 error,
               }),
-              "justify-between",
+              "flex w-full items-center justify-between",
               dragging && "border-blue-500 bg-blue-50",
               className,
             )}
@@ -248,7 +248,7 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>(
                   event.stopPropagation();
                   handleClear();
                 }}
-                className="absolute right-8 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-500"
+                className="absolute right-10 top-1/2 cursor-pointer -translate-y-1/2 text-gray-400 hover:text-red-500"
                 aria-label="Clear file"
               >
                 <CloseIcon />

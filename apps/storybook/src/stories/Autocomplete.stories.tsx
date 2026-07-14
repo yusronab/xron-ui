@@ -70,6 +70,66 @@ type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
 
+export const Showcase: Story = {
+  render: () => (
+    <div className="flex max-w-md flex-col gap-4">
+      <Autocomplete
+        options={users}
+        labelKey="name"
+        valueKey="id"
+        placeholder="Default"
+      />
+
+      <Autocomplete
+        options={users}
+        labelKey="name"
+        valueKey="id"
+        placeholder="Rounded"
+        rounded
+      />
+
+      <Autocomplete
+        options={users}
+        labelKey="name"
+        valueKey="id"
+        placeholder="Clearable"
+        clearable
+      />
+
+      <Autocomplete
+        options={users}
+        labelKey="name"
+        valueKey="id"
+        placeholder="Loading"
+        loading
+      />
+
+      <Autocomplete
+        options={[]}
+        labelKey="name"
+        valueKey="id"
+        placeholder="Empty"
+      />
+
+      <Autocomplete
+        options={users}
+        labelKey="name"
+        valueKey="id"
+        placeholder="Disabled"
+        disabled
+      />
+
+      <Autocomplete
+        options={users}
+        labelKey="name"
+        valueKey="id"
+        placeholder="Error"
+        error
+      />
+    </div>
+  ),
+};
+
 export const Default: Story = {};
 
 export const Clearable: Story = {
@@ -138,64 +198,4 @@ function AsyncSearchExample(props: React.ComponentProps<typeof Autocomplete>) {
 
 export const AsyncSearch: Story = {
   render: (args) => <AsyncSearchExample {...args} />,
-};
-
-export const Showcase: Story = {
-  render: () => (
-    <div className="flex max-w-md flex-col gap-4">
-      <Autocomplete
-        options={users}
-        labelKey="name"
-        valueKey="id"
-        placeholder="Default"
-      />
-
-      <Autocomplete
-        options={users}
-        labelKey="name"
-        valueKey="id"
-        placeholder="Rounded"
-        rounded
-      />
-
-      <Autocomplete
-        options={users}
-        labelKey="name"
-        valueKey="id"
-        placeholder="Clearable"
-        clearable
-      />
-
-      <Autocomplete
-        options={users}
-        labelKey="name"
-        valueKey="id"
-        placeholder="Loading"
-        loading
-      />
-
-      <Autocomplete
-        options={[]}
-        labelKey="name"
-        valueKey="id"
-        placeholder="Empty"
-      />
-
-      <Autocomplete
-        options={users}
-        labelKey="name"
-        valueKey="id"
-        placeholder="Disabled"
-        disabled
-      />
-
-      <Autocomplete
-        options={users}
-        labelKey="name"
-        valueKey="id"
-        placeholder="Error"
-        error
-      />
-    </div>
-  ),
 };
