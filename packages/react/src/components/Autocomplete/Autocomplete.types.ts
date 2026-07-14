@@ -20,6 +20,8 @@ export interface AutocompleteProps
   emptyText?: string;
   clearable?: boolean;
   debounce?: number;
+  clearIcon?: React.ReactNode;
+  clearIconClassName?: string;
 
   onSearch?: (keyword: string) => void | Promise<void>;
   onChange?: (value: string | number, option: AutocompleteOption) => void;

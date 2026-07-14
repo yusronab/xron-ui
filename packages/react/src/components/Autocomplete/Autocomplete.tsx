@@ -20,17 +20,25 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       size,
       rounded,
       error,
+
       value,
       options,
-      labelKey,
-      valueKey,
       loading,
-      loadingText = "Loading...",
-      emptyText = "No data",
       disabled,
       placeholder,
+
+      labelKey,
+      valueKey,
+
+      loadingText = "Loading...",
+      emptyText = "No data",
+
       clearable,
       debounce,
+
+      clearIcon,
+      clearIconClassName,
+
       onSearch,
       onChange,
       ...props
@@ -40,6 +48,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     const rootRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
     const [open, setOpen] = useState(false);
     const [keyword, setKeyword] = useState("");
@@ -58,9 +67,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     }
 
     const filteredOptions = useMemo(() => {
-      if (onSearch) {
-        return options;
-      }
+      if (onSearch) return options;
 
       return options.filter((option) => {
         const label = getStringValue(option[labelKey]);
@@ -69,10 +76,20 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       });
     }, [keyword, options, labelKey, onSearch]);
 
-    function updateDropdownPosition() {
-      if (!inputRef.current) {
-        return;
+    useEffect(() => {
+      const selected = options.find(
+        (option) => String(option[valueKey]) === String(value),
+      );
+
+      if (selected) {
+        setKeyword(getStringValue(selected[labelKey]));
+      } else if (value == null || value === "") {
+        setKeyword("");
       }
+    }, [value, options, labelKey, valueKey]);
+
+    function updateDropdownPosition() {
+      if (!inputRef.current) return;
 
       const rect = inputRef.current.getBoundingClientRect();
 
@@ -94,9 +111,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     }
 
     function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
-      if (!open) {
-        return;
-      }
+      if (!open) return;
 
       switch (event.key) {
         case "ArrowDown":
@@ -134,12 +149,16 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
 
     useEffect(() => {
       function outside(event: MouseEvent) {
+        const target = event.target as Node;
+
         if (
-          rootRef.current &&
-          !rootRef.current.contains(event.target as Node)
+          rootRef.current?.contains(target) ||
+          dropdownRef.current?.contains(target)
         ) {
-          setOpen(false);
+          return;
         }
+
+        setOpen(false);
       }
 
       document.addEventListener("mousedown", outside);
@@ -148,9 +167,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     }, []);
 
     useEffect(() => {
-      if (!open) {
-        return;
-      }
+      if (!open) return;
 
       setActiveIndex(-1);
       updateDropdownPosition();
@@ -165,9 +182,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     }, [open]);
 
     useEffect(() => {
-      if (activeIndex < 0) {
-        return;
-      }
+      if (activeIndex < 0) return;
 
       optionRefs.current[activeIndex]?.scrollIntoView({
         block: "nearest",
@@ -251,10 +266,18 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
               onClick={() => {
                 setKeyword("");
                 setOpen(false);
+                onChange?.("", {});
               }}
-              className="absolute right-3 top-1/2 -translate-y-1/2"
+              className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
             >
-              <CloseIcon />
+              {clearIcon ?? (
+                <CloseIcon
+                  className={cn(
+                    "h-4 w-4 text-gray-400 transition-colors",
+                    clearIconClassName,
+                  )}
+                />
+              )}
             </button>
           )}
         </div>
@@ -262,11 +285,14 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
         {open &&
           createPortal(
             <div
+              ref={dropdownRef}
               style={dropdownStyle}
               className={cn(
                 "max-h-64 overflow-auto border bg-white shadow-md",
                 "dark:border-gray-700",
                 "dark:bg-gray-900",
+                "text-gray-900",
+                "dark:text-gray-100",
                 rounded ? "rounded-2xl" : "rounded-md",
               )}
             >
