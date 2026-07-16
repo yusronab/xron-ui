@@ -6,7 +6,7 @@ A modern, lightweight, and customizable UI component library built for multiple 
 
 Currently available on npm:
 
-- 📦 `@xron-ui/react`
+- [`@xron-ui/react`](https://www.npmjs.com/package/@xron-ui/react)
 
 Planned packages:
 

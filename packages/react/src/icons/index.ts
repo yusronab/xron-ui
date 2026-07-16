@@ -15,3 +15,24 @@ export type { CheckIconProps } from "./CheckIcon";
 
 export { UploadIcon } from "./UploadIcon";
 export type { UploadIconProps } from "./UploadIcon";
+
+export { ChevronLeftIcon } from "./ChevronLeftIcon";
+export type { ChevronLeftIconProps } from "./ChevronLeftIcon";
+
+export { ChevronRightIcon } from "./ChevronRightIcon";
+export type { ChevronRightIconProps } from "./ChevronRightIcon";
+
+export { ChevronsLeftIcon } from "./ChevronsLeftIcon";
+export type { ChevronsLeftIconProps } from "./ChevronsLeftIcon";
+
+export { ChevronsRightIcon } from "./ChevronsRightIcon";
+export type { ChevronsRightIconProps } from "./ChevronsRightIcon";
+
+export { ChevronUpIcon } from "./ChevronUpIcon";
+export type { ChevronUpIconProps } from "./ChevronUpIcon";
+
+export { ChevronsUpDownIcon } from "./ChevronsUpDownIcon";
+export type { ChevronsUpDownIconProps } from "./ChevronsUpDownIcon";
+
+export { MinusIcon } from "./MinusIcon";
+export type { MinusIconProps } from "./MinusIcon";

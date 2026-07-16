@@ -152,7 +152,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
         (option) => String(option[valueKey]) === String(value),
       );
 
-      setActiveIndex(selectedIndex >= 0 ? selectedIndex : 0);
+      setActiveIndex(Math.max(selectedIndex, 0));
     }, [open, options, value, valueKey]);
 
     useEffect(() => {

@@ -15,6 +15,9 @@ export * from "./components/InputPassword";
 
 export * from "./components/Label";
 
+export * from "./components/PageSize";
+export * from "./components/Pagination";
+
 export * from "./components/Radio";
 
 export * from "./components/Select";
@@ -22,3 +25,4 @@ export * from "./components/Spinner";
 export * from "./components/Switch";
 
 export * from "./components/Textarea";
+export * from "./components/Table";

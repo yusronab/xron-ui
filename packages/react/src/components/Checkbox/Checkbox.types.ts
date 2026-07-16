@@ -5,7 +5,10 @@ export interface CheckboxProps extends Omit<
   "type" | "size" | "onChange"
 > {
   label?: ReactNode;
+
   error?: boolean;
+
+  indeterminate?: boolean;
 
   onCheckedChange?: (checked: boolean) => void;
 }

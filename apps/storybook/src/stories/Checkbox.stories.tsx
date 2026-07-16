@@ -11,12 +11,17 @@ const meta = {
   args: {
     label: "Accept terms and conditions",
     checked: false,
+    indeterminate: false,
     disabled: false,
     error: false,
   },
 
   argTypes: {
     checked: {
+      control: "boolean",
+    },
+
+    indeterminate: {
       control: "boolean",
     },
 
@@ -40,14 +45,18 @@ type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {
   render: function Render(args) {
-    const [{ checked }, updateArgs] = useArgs();
+    const [{ checked, indeterminate }, updateArgs] = useArgs();
 
     return (
       <Checkbox
         {...args}
         checked={checked}
+        indeterminate={indeterminate}
         onCheckedChange={(value) => {
-          updateArgs({ checked: value });
+          updateArgs({
+            checked: value,
+            indeterminate: false,
+          });
         }}
       />
     );
@@ -83,6 +92,12 @@ export const Showcase: Story = {
       />
 
       <Checkbox checked onCheckedChange={() => {}} />
+
+      <Checkbox
+        label="Indeterminate"
+        indeterminate
+        onCheckedChange={() => {}}
+      />
     </div>
   ),
 };
@@ -97,6 +112,13 @@ export const Checked: Story = {
   args: {
     label: "Checked",
     checked: true,
+  },
+};
+
+export const Indeterminate: Story = {
+  args: {
+    label: "Indeterminate",
+    indeterminate: true,
   },
 };
 

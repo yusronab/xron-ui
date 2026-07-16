@@ -62,6 +62,12 @@ UI
 - [Button](#button)
 - [Spinner](#spinner)
 
+Table
+
+- [PageSize](#pagesize)
+- [Pagination](#pagination)
+- [Table](#table)
+
 ---
 
 <details>
@@ -99,6 +105,8 @@ Buttons allow users to perform actions.
 | loading   | `boolean`                              | `false`     | Shows loading spinner |
 | disabled  | `boolean`                              | `false`     | Disables button       |
 | fullWidth | `boolean`                              | `false`     | Full width button     |
+
+> `Button` extends all native `<button>` HTML attributes, including `type`, `onClick`, `form`, `name`, `value`, `autoFocus`, `aria-*`, and other standard button attributes.
 
 </details>
 
@@ -197,6 +205,8 @@ Additional props:
 | error     | `boolean` | `false` | Error state      |
 | fullWidth | `boolean` | `false` | Full width input |
 
+> `Input` extends all native `<input>` HTML attributes except the native `size` attribute, which is replaced by the component's `size` variant.
+
 </details>
 
 ---
@@ -260,6 +270,8 @@ export default function App() {
 | size        | `"sm" \| "md" \| "lg"`    | `"md"`         | Select size                       |
 | onChange    | `(value, option) => void` | -              | Called when an option is selected |
 
+> `Select` extends all native `<button>` HTML attributes except the native `onChange` event. Use the component's `onChange` callback to receive the selected value and option.
+
 </details>
 
 ---
@@ -286,6 +298,8 @@ A multiline text input component.
 | ----- | ---------------------- | ------- | ----------------------- |
 | size  | `"sm" \| "md" \| "lg"` | `"md"`  | Textarea minimum height |
 | error | `boolean`              | `false` | Displays error state    |
+
+> `Textarea` extends all native `<textarea>` HTML attributes, including `rows`, `cols`, `placeholder`, `maxLength`, `readOnly`, `disabled`, `autoFocus`, `aria-*`, and other standard textarea attributes.
 
 </details>
 
@@ -466,7 +480,7 @@ export default function App() {
 
 </summary>
 
-A customizable checkbox component with built-in label support, custom styling, and accessibility.
+A customizable checkbox component with support for controlled state, indeterminate state, custom labels, and accessibility.
 
 ## Example
 
@@ -499,6 +513,12 @@ export default function App() {
 }
 ```
 
+### Indeterminate
+
+```tsx
+<Checkbox checked={false} indeterminate label="Select all" />
+```
+
 ### Error
 
 ```tsx
@@ -519,13 +539,14 @@ export default function App() {
 
 ## Props
 
-| Prop            | Type                         | Default | Description                           |
-| --------------- | ---------------------------- | ------- | ------------------------------------- |
-| checked         | `boolean`                    | -       | Controlled checked state              |
-| label           | `ReactNode`                  | -       | Checkbox label                        |
-| error           | `boolean`                    | `false` | Displays error state                  |
-| disabled        | `boolean`                    | `false` | Disables the checkbox                 |
-| onCheckedChange | `(checked: boolean) => void` | -       | Called when the checked state changes |
+| Prop            | Type                         | Default | Description                                     |
+| --------------- | ---------------------------- | ------- | ----------------------------------------------- |
+| checked         | `boolean`                    | -       | Controlled checked state                        |
+| indeterminate   | `boolean`                    | `false` | Displays the checkbox in an indeterminate state |
+| label           | `ReactNode`                  | -       | Checkbox label                                  |
+| error           | `boolean`                    | `false` | Displays the error state                        |
+| disabled        | `boolean`                    | `false` | Disables the checkbox                           |
+| onCheckedChange | `(checked: boolean) => void` | -       | Called when the checked state changes           |
 
 > `Checkbox` extends all native `<input type="checkbox">` HTML attributes except `type`, `size`, and the native `onChange` event.
 
@@ -848,6 +869,432 @@ const [files, setFiles] = useState<File[]>([]);
 | renderClearButton | `(clear: () => void) => ReactNode`       | -          | Custom clear button                         |
 
 > `InputFile` extends all native `<input type="file">` HTML attributes except `type`, `size`, `value`, and the native `onChange` event.
+
+</details>
+
+---
+
+<details>
+
+<summary>
+
+# PageSize
+
+</summary>
+
+A page size selector built on top of the `Select` component. It is commonly used together with `Pagination` or `Table` to control how many rows are displayed per page.
+
+## Example
+
+### Basic
+
+```tsx
+import { useState } from "react";
+import { PageSize } from "@xron-ui/react";
+
+export default function App() {
+  const [pageSize, setPageSize] = useState(10);
+
+  return <PageSize value={pageSize} onChange={setPageSize} />;
+}
+```
+
+### With Prefix
+
+```tsx
+<PageSize
+  value={10}
+  prefix="Rows per page"
+  onChange={(value) => console.log(value)}
+/>
+```
+
+### With Suffix
+
+```tsx
+<PageSize value={10} suffix="items" onChange={(value) => console.log(value)} />
+```
+
+### Custom Options
+
+```tsx
+<PageSize
+  value={25}
+  options={[
+    {
+      label: "25",
+      value: 25,
+    },
+    {
+      label: "50",
+      value: 50,
+    },
+    {
+      label: "100",
+      value: 100,
+    },
+  ]}
+  onChange={(value) => console.log(value)}
+/>
+```
+
+### Disabled
+
+```tsx
+<PageSize disabled value={10} />
+```
+
+## Props
+
+| Prop     | Type                      | Default           | Description                                |
+| -------- | ------------------------- | ----------------- | ------------------------------------------ |
+| value    | `number`                  | -                 | Currently selected page size               |
+| options  | `SelectOption[]`          | `10, 20, 50, 100` | Available page size options                |
+| prefix   | `ReactNode`               | -                 | Content displayed before the selector      |
+| suffix   | `ReactNode`               | -                 | Content displayed after the selector       |
+| onChange | `(value: number) => void` | -                 | Called when the selected page size changes |
+
+> `PageSize` extends all `Select` component props except `options`, `value`, `labelKey`, `valueKey`, `prefix`, `suffix`, and `onChange`.
+
+</details>
+
+---
+
+<details>
+
+<summary>
+
+# Pagination
+
+</summary>
+
+A pagination component for navigating through paged data. It supports configurable page sizes, sibling pages, multiple sizes, rounded styles, and works seamlessly with client-side or server-side pagination.
+
+## Example
+
+### Basic
+
+```tsx
+import { useState } from "react";
+import { Pagination } from "@xron-ui/react";
+
+export default function App() {
+  const [page, setPage] = useState(1);
+
+  return (
+    <Pagination page={page} pageSize={10} total={250} onPageChange={setPage} />
+  );
+}
+```
+
+### Rounded
+
+```tsx
+<Pagination
+  page={1}
+  pageSize={10}
+  total={250}
+  rounded
+  onPageChange={(page) => console.log(page)}
+/>
+```
+
+### Small Size
+
+```tsx
+<Pagination
+  page={1}
+  pageSize={10}
+  total={250}
+  size="sm"
+  onPageChange={(page) => console.log(page)}
+/>
+```
+
+### Large Size
+
+```tsx
+<Pagination
+  page={1}
+  pageSize={10}
+  total={250}
+  size="lg"
+  onPageChange={(page) => console.log(page)}
+/>
+```
+
+### Custom Sibling Count
+
+```tsx
+<Pagination
+  page={8}
+  pageSize={10}
+  total={500}
+  siblingCount={2}
+  onPageChange={(page) => console.log(page)}
+/>
+```
+
+### Single Page
+
+```tsx
+<Pagination
+  page={1}
+  pageSize={10}
+  total={5}
+  onPageChange={(page) => console.log(page)}
+/>
+```
+
+## Props
+
+| Prop         | Type                     | Default | Description                                                       |
+| ------------ | ------------------------ | ------- | ----------------------------------------------------------------- |
+| page         | `number`                 | -       | Current active page (1-based)                                     |
+| pageSize     | `number`                 | -       | Number of items displayed per page                                |
+| total        | `number`                 | -       | Total number of items                                             |
+| siblingCount | `number`                 | `1`     | Number of page buttons displayed on each side of the current page |
+| size         | `"sm" \| "md" \| "lg"`   | `"md"`  | Size of pagination buttons                                        |
+| rounded      | `boolean`                | `false` | Displays rounded pagination buttons                               |
+| onPageChange | `(page: number) => void` | -       | Called when the active page changes                               |
+
+</details>
+
+---
+
+<details>
+
+<summary>
+
+# Table
+
+</summary>
+
+A flexible and type-safe data table component with support for custom columns, row selection, sorting, striped rows, and fully controlled state. It is designed to work seamlessly with the `Pagination` and `PageSize` components for both client-side and server-side data handling.
+
+## Example
+
+### Basic
+
+```tsx
+import { Table } from "@xron-ui/react";
+
+const users = [
+  {
+    id: "1",
+    name: "John Doe",
+    email: "john@example.com",
+    role: "Admin",
+  },
+  {
+    id: "2",
+    name: "Jean Doe",
+    email: "jean@example.com",
+    role: "User",
+  },
+];
+
+const columns = [
+  {
+    key: "name",
+    title: "Name",
+  },
+  {
+    key: "email",
+    title: "Email",
+  },
+  {
+    key: "role",
+    title: "Role",
+  },
+];
+
+export default function App() {
+  return <Table rowKey="id" data={users} columns={columns} />;
+}
+```
+
+### Striped Rows
+
+```tsx
+<Table rowKey="id" data={users} columns={columns} striped />
+```
+
+### Sorting
+
+```tsx
+import { useState } from "react";
+
+export default function App() {
+  const [sorting, setSorting] = useState({
+    field: undefined,
+    direction: null,
+  });
+
+  return (
+    <Table
+      rowKey="id"
+      data={users}
+      columns={columns}
+      sorting={{
+        field: sorting.field,
+        direction: sorting.direction,
+        onSort(field, direction) {
+          setSorting({
+            field,
+            direction,
+          });
+        },
+      }}
+    />
+  );
+}
+```
+
+### Row Selection
+
+```tsx
+import { useState } from "react";
+
+export default function App() {
+  const [selectedRows, setSelectedRows] = useState<string[]>([]);
+
+  return (
+    <Table
+      rowKey="id"
+      data={users}
+      columns={columns}
+      selection={{
+        selectedRowKeys: selectedRows,
+        onChange: setSelectedRows,
+      }}
+    />
+  );
+}
+```
+
+### Sorting + Selection
+
+```tsx
+<Table
+  rowKey="id"
+  data={users}
+  columns={columns}
+  striped
+  sorting={{
+    field: sorting.field,
+    direction: sorting.direction,
+    onSort(field, direction) {
+      setSorting({
+        field,
+        direction,
+      });
+    },
+  }}
+  selection={{
+    selectedRowKeys: selectedRows,
+    onChange: setSelectedRows,
+  }}
+/>
+```
+
+### Custom Cell Rendering
+
+```tsx
+import { Table, type TableColumn } from "@xron-ui/react";
+
+const customColumns: TableColumn<User>[] = [
+  {
+    key: "name",
+    title: "User",
+    render(value, row) {
+      return (
+        <div className="flex flex-col">
+          <span className="font-medium">{value}</span>
+
+          <span className="text-xs text-gray-500">{row.email}</span>
+        </div>
+      );
+    },
+  },
+  {
+    key: "role",
+    title: "Role",
+    render(value) {
+      return (
+        <span className="rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700">
+          {value}
+        </span>
+      );
+    },
+  },
+];
+
+export default function App() {
+  return <Table rowKey="id" data={users} columns={customColumns} striped />;
+}
+```
+
+## With Pagination
+
+```tsx
+import { useMemo, useState } from "react";
+import { PageSize, Pagination, Table } from "@xron-ui/react";
+
+export default function App() {
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
+  const paginatedData = useMemo(() => {
+    const start = (page - 1) * pageSize;
+
+    return users.slice(start, start + pageSize);
+  }, [page, pageSize]);
+
+  return (
+    <>
+      <Table rowKey="id" data={paginatedData} columns={columns} />
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: 16,
+        }}
+      >
+        <PageSize
+          value={pageSize}
+          onChange={(value) => {
+            setPageSize(value);
+            setPage(1);
+          }}
+        />
+
+        <Pagination
+          page={page}
+          pageSize={pageSize}
+          total={users.length}
+          onPageChange={setPage}
+        />
+      </div>
+    </>
+  );
+}
+```
+
+## Props
+
+| Prop      | Type                   | Default | Description                                         |
+| --------- | ---------------------- | ------- | --------------------------------------------------- |
+| rowKey    | `keyof TData`          | -       | Property used as the unique identifier for each row |
+| data      | `TData[]`              | -       | Table data                                          |
+| columns   | `ColumnDef<TData>[]`   | -       | Column definitions                                  |
+| striped   | `boolean`              | `false` | Displays alternating row backgrounds                |
+| sorting   | `TableSorting<TData>`  | -       | Controlled sorting configuration                    |
+| selection | `TableSelection<TKey>` | -       | Controlled row selection configuration              |
+| className | `string`               | -       | Additional class names applied to the table         |
+
+> `Table` is a presentational component. Data sorting, filtering, searching, and pagination are intentionally controlled by the parent component, making it suitable for both client-side and server-side implementations.
 
 </details>
 
