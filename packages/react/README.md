@@ -40,6 +40,25 @@ function App() {
 export default App;
 ```
 
+## Theme
+
+By default, the components follow the user's system color scheme (light or dark).
+
+If you want to always use the light theme, configure your application before rendering the React app:
+
+```tsx
+import ReactDOM from "react-dom/client";
+
+import App from "./App";
+
+import "@xron-ui/react/styles.css";
+
+document.documentElement.classList.remove("dark");
+document.documentElement.style.colorScheme = "light";
+
+ReactDOM.createRoot(document.getElementById("root")!).render(<App />);
+```
+
 ## Components
 
 Form
