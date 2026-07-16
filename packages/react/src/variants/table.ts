@@ -13,7 +13,7 @@ export const tableVariants = cva([
 export const tableHeaderVariants = cva([
   "text-gray-800",
   "border-b",
-  "border-gray-200",
+  "border-gray-400",
 
   "dark:text-gray-200",
   "dark:border-gray-700",

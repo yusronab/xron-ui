@@ -60,7 +60,9 @@ UI
 
 - [Badge](#badge)
 - [Button](#button)
+- [Modal](#modal)
 - [Spinner](#spinner)
+- [Tooltip](#tooltip)
 
 Table
 
@@ -1182,9 +1184,31 @@ export default function App() {
 
 ```tsx
 import { useState } from "react";
+import { Table, type SortDirection } from "@xron-ui/react";
+
+const columns: TableColumn<User>[] = [
+  {
+    key: "name",
+    title: "Name",
+    sortable: true,
+  },
+  {
+    key: "email",
+    title: "Email",
+    sortable: true,
+  },
+  {
+    key: "role",
+    title: "Role",
+    sortable: true,
+  },
+];
 
 export default function App() {
-  const [sorting, setSorting] = useState({
+  const [sorting, setSorting] = useState<{
+    field?: keyof User;
+    direction?: SortDirection;
+  }>({
     field: undefined,
     direction: null,
   });
@@ -1353,6 +1377,224 @@ export default function App() {
 | className | `string`               | -       | Additional class names applied to the table         |
 
 > `Table` is a presentational component. Data sorting, filtering, searching, and pagination are intentionally controlled by the parent component, making it suitable for both client-side and server-side implementations.
+
+</details>
+
+---
+
+<details>
+
+<summary>
+
+# Tooltip
+
+</summary>
+
+Tooltips display additional information when users hover or focus an element. They support multiple placements, sizes, optional arrows, configurable delays, automatic viewport flipping, and smart positioning.
+
+## Example
+
+### Basic
+
+```tsx
+<Tooltip content="Save changes">
+  <Button>Save</Button>
+</Tooltip>
+```
+
+### Position
+
+```tsx
+<Tooltip
+  position="top-center"
+  content="Top"
+>
+  <Button>Top</Button>
+</Tooltip>
+
+<Tooltip
+  position="right"
+  content="Right"
+>
+  <Button>Right</Button>
+</Tooltip>
+```
+
+### Size
+
+```tsx
+<Tooltip
+  size="sm"
+  content="Small tooltip"
+>
+  <Button>Small</Button>
+</Tooltip>
+
+<Tooltip
+  size="lg"
+  content="Large tooltip"
+>
+  <Button>Large</Button>
+</Tooltip>
+```
+
+### Rich Content
+
+```tsx
+<Tooltip
+  content={
+    <>
+      <strong>Delete</strong>
+      <br />
+      This action cannot be undone.
+    </>
+  }
+>
+  <Button>Delete</Button>
+</Tooltip>
+```
+
+### Without Arrow
+
+```tsx
+<Tooltip arrow={false} content="No arrow">
+  <Button>Hover</Button>
+</Tooltip>
+```
+
+### Delay
+
+```tsx
+<Tooltip delay={500} content="Appears after 500ms">
+  <Button>Hover</Button>
+</Tooltip>
+```
+
+## Props
+
+| Prop     | Type                                                                                                                   | Default           | Description                                     |
+| -------- | ---------------------------------------------------------------------------------------------------------------------- | ----------------- | ----------------------------------------------- |
+| content  | `ReactNode`                                                                                                            | —                 | Content displayed inside the tooltip            |
+| position | `"top-left" \| "top-center" \| "top-right" \| "bottom-left" \| "bottom-center" \| "bottom-right" \| "left" \| "right"` | `"bottom-center"` | Preferred tooltip placement                     |
+| size     | `"sm" \| "md" \| "lg"`                                                                                                 | `"md"`            | Tooltip size                                    |
+| delay    | `number`                                                                                                               | `200`             | Delay before showing the tooltip (milliseconds) |
+| offset   | `number`                                                                                                               | `8`               | Distance between the trigger and tooltip        |
+| arrow    | `boolean`                                                                                                              | `true`            | Displays the tooltip arrow                      |
+| disabled | `boolean`                                                                                                              | `false`           | Disables the tooltip                            |
+
+> `Tooltip` extends all native `<div>` HTML attributes, including `className`, `style`, `id`, `data-*`, `aria-*`, and other standard div attributes.
+
+</details>
+
+---
+
+<details>
+
+<summary>
+
+# Modal
+
+</summary>
+
+Modal displays content in a focused dialog overlay. It supports controlled visibility, multiple sizes, escape key closing, overlay click closing, and native dialog accessibility behavior.
+
+## Example
+
+### Basic
+
+```tsx
+const [open, setOpen] = useState(false);
+
+return (
+  <>
+    <Button onClick={() => setOpen(true)}>Open Modal</Button>
+
+    <Modal open={open} onClose={() => setOpen(false)}>
+      <div className="p-6">
+        <h2 className="text-xl font-semibold">Modal Title</h2>
+
+        <p className="mt-2 text-gray-500">This is a basic modal example.</p>
+      </div>
+    </Modal>
+  </>
+);
+```
+
+### Size
+
+```tsx
+<Modal
+  open={open}
+  onClose={() => setOpen(false)}
+  size="sm"
+>
+  Small modal
+</Modal>
+
+<Modal
+  open={open}
+  onClose={() => setOpen(false)}
+  size="lg"
+>
+  Large modal
+</Modal>
+
+<Modal
+  open={open}
+  onClose={() => setOpen(false)}
+  size="full"
+>
+  Fullscreen modal
+</Modal>
+```
+
+### Confirmation Modal
+
+```tsx
+<Modal open={open} onClose={() => setOpen(false)} size="md">
+  <div className="space-y-4 p-6">
+    <h2 className="text-lg font-semibold">Delete User</h2>
+
+    <p>This action cannot be undone.</p>
+
+    <div className="flex justify-end gap-2">
+      <Button appearance="outline" onClick={() => setOpen(false)}>
+        Cancel
+      </Button>
+
+      <Button variant="error">Delete</Button>
+    </div>
+  </div>
+</Modal>
+```
+
+### Disable Overlay Close
+
+```tsx
+<Modal open={open} onClose={() => setOpen(false)} closeOnOverlayClick={false}>
+  Content
+</Modal>
+```
+
+### Disable Escape Close
+
+```tsx
+<Modal open={open} onClose={() => setOpen(false)} closeOnEscape={false}>
+  Content
+</Modal>
+```
+
+## Props
+
+| Prop                | Type                                     | Default | Description                                      |
+| ------------------- | ---------------------------------------- | ------- | ------------------------------------------------ |
+| open                | `boolean`                                | —       | Controls modal visibility                        |
+| onClose             | `() => void`                             | —       | Callback when modal is closed                    |
+| size                | `"sm" \| "md" \| "lg" \| "xl" \| "full"` | `"md"`  | Modal width and size                             |
+| closeOnEscape       | `boolean`                                | `true`  | Allows closing modal using Escape key            |
+| closeOnOverlayClick | `boolean`                                | `true`  | Allows closing modal by clicking outside content |
+
+> `Modal` extends all native `<dialog>` HTML attributes, including `className`, `style`, `id`, `data-*`, `aria-*`, and other standard dialog attributes.
 
 </details>
 
