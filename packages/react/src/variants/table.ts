@@ -10,7 +10,14 @@ export const tableVariants = cva([
   "dark:text-gray-100",
 ]);
 
-export const tableHeaderVariants = cva(["text-gray-800", "dark:text-gray-200"]);
+export const tableHeaderVariants = cva([
+  "text-gray-800",
+  "border-b",
+  "border-gray-200",
+
+  "dark:text-gray-200",
+  "dark:border-gray-700",
+]);
 
 export const tableHeadVariants = cva([
   "px-4",
@@ -23,13 +30,16 @@ export const tableRowVariants = cva(
   [
     "transition-colors",
     "text-gray-900",
+
     "hover:bg-gray-300",
+
+    "dark:hover:bg-gray-800",
     "dark:text-gray-100",
   ],
   {
     variants: {
       striped: {
-        true: ["odd:bg-gray-50", "dark:odd:bg-gray-900/40"],
+        true: ["odd:bg-gray-200", "dark:odd:bg-gray-900/40"],
 
         false: "",
       },
