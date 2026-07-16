@@ -1,7 +1,5 @@
 import { cn } from "../../utils";
 
-import { paginationItemVariants } from "../../variants/pagination";
-
 import { DOTS, getPaginationRange } from "./Pagination.utils";
 
 import type { PaginationProps } from "./Pagination.types";
@@ -12,6 +10,7 @@ import {
   ChevronsRightIcon,
 } from "../../icons";
 import { forwardRef } from "react";
+import { Button } from "../Button";
 
 export const Pagination = forwardRef<HTMLElement, PaginationProps>(
   (
@@ -20,9 +19,10 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       pageSize,
       total,
       siblingCount = 1,
-      size,
-      rounded,
       className,
+      buttonVariant = "primary",
+      buttonSize = "md",
+      buttonRounded = false,
       onPageChange,
     },
     ref,
@@ -38,36 +38,33 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       siblingCount,
     });
 
-    const paginationItemClass = paginationItemVariants({
-      size,
-      rounded,
-    });
-
     return (
       <nav
         ref={ref}
         className={cn("flex items-center justify-center gap-2", className)}
         aria-label="Pagination"
       >
-        <button
-          type="button"
+        <Button
+          variant={buttonVariant}
+          size={buttonSize}
+          rounded={buttonRounded}
           aria-label="Go to first page"
           disabled={currentPage === 1}
           onClick={() => onPageChange(1)}
-          className={paginationItemClass}
         >
           <ChevronsLeftIcon />
-        </button>
+        </Button>
 
-        <button
-          type="button"
+        <Button
+          variant={buttonVariant}
+          size={buttonSize}
+          rounded={buttonRounded}
           aria-label="Go to previous page"
           disabled={currentPage === 1}
           onClick={() => onPageChange(currentPage - 1)}
-          className={paginationItemClass}
         >
           <ChevronLeftIcon />
-        </button>
+        </Button>
 
         {pages.map((item, index) => {
           if (item === DOTS) {
@@ -83,42 +80,42 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
           }
 
           return (
-            <button
+            <Button
               key={item}
               aria-label={`Page ${item}`}
               aria-current={currentPage === item ? "page" : undefined}
-              type="button"
+              variant={buttonVariant}
+              size={buttonSize}
+              rounded={buttonRounded}
+              appearance={currentPage === item ? "solid" : "outline"}
               onClick={() => onPageChange(item)}
-              className={paginationItemVariants({
-                size,
-                rounded,
-                active: currentPage === item,
-              })}
             >
               {item}
-            </button>
+            </Button>
           );
         })}
 
-        <button
-          type="button"
+        <Button
+          variant={buttonVariant}
+          size={buttonSize}
+          rounded={buttonRounded}
           aria-label="Go to next page"
           disabled={currentPage === totalPages}
           onClick={() => onPageChange(currentPage + 1)}
-          className={paginationItemClass}
         >
           <ChevronRightIcon />
-        </button>
+        </Button>
 
-        <button
-          type="button"
+        <Button
+          variant={buttonVariant}
+          size={buttonSize}
+          rounded={buttonRounded}
           aria-label="Go to last page"
           disabled={currentPage === totalPages}
           onClick={() => onPageChange(totalPages)}
-          className={paginationItemClass}
         >
           <ChevronsRightIcon />
-        </button>
+        </Button>
       </nav>
     );
   },

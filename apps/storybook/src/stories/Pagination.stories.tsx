@@ -6,17 +6,38 @@ import { Pagination } from "@xron-ui/react";
 const meta = {
   title: "Components/Pagination",
   component: Pagination,
+
   parameters: {
     layout: "centered",
   },
+
   args: {
     page: 1,
     pageSize: 10,
     total: 250,
     siblingCount: 1,
-    size: "md",
-    rounded: false,
+
+    buttonVariant: "primary",
+    buttonSize: "md",
+    buttonRounded: false,
+
     onPageChange: () => {},
+  },
+
+  argTypes: {
+    buttonVariant: {
+      control: "select",
+      options: ["primary", "secondary", "success", "warning", "error"],
+    },
+
+    buttonSize: {
+      control: "inline-radio",
+      options: ["sm", "md", "lg"],
+    },
+
+    buttonRounded: {
+      control: "boolean",
+    },
   },
 } satisfies Meta<typeof Pagination>;
 
@@ -39,34 +60,73 @@ function StatefulPagination(args: React.ComponentProps<typeof Pagination>) {
   );
 }
 
+export const Playground: Story = {
+  render: (args) => <StatefulPagination {...args} />,
+};
+
 export const Default: Story = {
   render: (args) => <StatefulPagination {...args} />,
 };
 
 export const Small: Story = {
   args: {
-    size: "sm",
+    buttonSize: "sm",
   },
   render: (args) => <StatefulPagination {...args} />,
 };
 
 export const Medium: Story = {
   args: {
-    size: "md",
+    buttonSize: "md",
   },
   render: (args) => <StatefulPagination {...args} />,
 };
 
 export const Large: Story = {
   args: {
-    size: "lg",
+    buttonSize: "lg",
   },
   render: (args) => <StatefulPagination {...args} />,
 };
 
 export const Rounded: Story = {
   args: {
-    rounded: true,
+    buttonRounded: true,
+  },
+  render: (args) => <StatefulPagination {...args} />,
+};
+
+export const Primary: Story = {
+  args: {
+    buttonVariant: "primary",
+  },
+  render: (args) => <StatefulPagination {...args} />,
+};
+
+export const Secondary: Story = {
+  args: {
+    buttonVariant: "secondary",
+  },
+  render: (args) => <StatefulPagination {...args} />,
+};
+
+export const Success: Story = {
+  args: {
+    buttonVariant: "success",
+  },
+  render: (args) => <StatefulPagination {...args} />,
+};
+
+export const Warning: Story = {
+  args: {
+    buttonVariant: "warning",
+  },
+  render: (args) => <StatefulPagination {...args} />,
+};
+
+export const ErrorVariant: Story = {
+  args: {
+    buttonVariant: "error",
   },
   render: (args) => <StatefulPagination {...args} />,
 };
@@ -75,9 +135,5 @@ export const ManyPages: Story = {
   args: {
     total: 1000,
   },
-  render: (args) => <StatefulPagination {...args} />,
-};
-
-export const Playground: Story = {
   render: (args) => <StatefulPagination {...args} />,
 };

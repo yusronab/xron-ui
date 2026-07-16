@@ -118,7 +118,7 @@ function TableComponent<T extends object, K extends keyof T>(
                 colSpan={columnCount}
                 className={cn(
                   tableCellVariants(),
-                  "py-10 text-center text-gray-600",
+                  "py-10 text-center text-gray-600 dark:text-gray-200",
                 )}
               >
                 {emptyText ?? "No data"}

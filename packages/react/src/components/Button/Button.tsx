@@ -11,6 +11,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     {
       className,
       variant,
+      appearance,
       size,
       rounded,
       fullWidth,
@@ -28,6 +29,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           buttonVariants({
             variant,
+            appearance,
             size,
             rounded,
             fullWidth,

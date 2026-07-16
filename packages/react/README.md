@@ -40,25 +40,6 @@ function App() {
 export default App;
 ```
 
-## Theme
-
-By default, the components follow the user's system color scheme (light or dark).
-
-If you want to always use the light theme, configure your application before rendering the React app:
-
-```tsx
-import ReactDOM from "react-dom/client";
-
-import App from "./App";
-
-import "@xron-ui/react/styles.css";
-
-document.documentElement.classList.remove("dark");
-document.documentElement.style.colorScheme = "light";
-
-ReactDOM.createRoot(document.getElementById("root")!).render(<App />);
-```
-
 ## Components
 
 Form
@@ -97,9 +78,11 @@ Table
 
 </summary>
 
-Buttons allow users to perform actions.
+Buttons allow users to perform actions and support multiple semantic colors, visual appearances, sizes, and states.
 
 ## Example
+
+### Solid
 
 ```tsx
 <Button>
@@ -109,21 +92,55 @@ Buttons allow users to perform actions.
 <Button variant="secondary">
   Cancel
 </Button>
+```
 
-<Button loading>
-  Saving...
+### Outline
+
+```tsx
+<Button appearance="outline">
+  Save
 </Button>
+
+<Button
+  variant="success"
+  appearance="outline"
+>
+  Success
+</Button>
+```
+
+### Ghost
+
+```tsx
+<Button appearance="ghost">
+  Cancel
+</Button>
+
+<Button
+  variant="error"
+  appearance="ghost"
+>
+  Delete
+</Button>
+```
+
+### Loading
+
+```tsx
+<Button loading>Saving...</Button>
 ```
 
 ## Props
 
-| Prop      | Type                                   | Default     | Description           |
-| --------- | -------------------------------------- | ----------- | --------------------- |
-| variant   | `"primary" \| "secondary" \| "danger"` | `"primary"` | Button style          |
-| size      | `"sm" \| "md" \| "lg"`                 | `"md"`      | Button size           |
-| loading   | `boolean`                              | `false`     | Shows loading spinner |
-| disabled  | `boolean`                              | `false`     | Disables button       |
-| fullWidth | `boolean`                              | `false`     | Full width button     |
+| Prop       | Type                                                            | Default     | Description                                           |
+| ---------- | --------------------------------------------------------------- | ----------- | ----------------------------------------------------- |
+| variant    | `"primary" \| "secondary" \| "success" \| "warning" \| "error"` | `"primary"` | Semantic color of the button                          |
+| appearance | `"solid" \| "outline" \| "ghost"`                               | `"solid"`   | Visual appearance of the button                       |
+| size       | `"sm" \| "md" \| "lg"`                                          | `"md"`      | Button size                                           |
+| rounded    | `boolean`                                                       | `false`     | Displays a fully rounded button                       |
+| fullWidth  | `boolean`                                                       | `false`     | Makes the button span the full width of its container |
+| loading    | `boolean`                                                       | `false`     | Shows a loading spinner and disables the button       |
+| disabled   | `boolean`                                                       | `false`     | Disables the button                                   |
 
 > `Button` extends all native `<button>` HTML attributes, including `type`, `onClick`, `form`, `name`, `value`, `autoFocus`, `aria-*`, and other standard button attributes.
 
@@ -987,7 +1004,7 @@ export default function App() {
 
 </summary>
 
-A pagination component for navigating through paged data. It supports configurable page sizes, sibling pages, multiple sizes, rounded styles, and works seamlessly with client-side or server-side pagination.
+A pagination component for navigating through paged data. It supports configurable page sizes, sibling pages, customizable button styles, and works seamlessly with both client-side and server-side pagination.
 
 ## Example
 
@@ -1006,38 +1023,50 @@ export default function App() {
 }
 ```
 
-### Rounded
+### Different Button Variant
 
 ```tsx
 <Pagination
   page={1}
   pageSize={10}
   total={250}
-  rounded
+  buttonVariant="success"
   onPageChange={(page) => console.log(page)}
 />
 ```
 
-### Small Size
+### Rounded Buttons
 
 ```tsx
 <Pagination
   page={1}
   pageSize={10}
   total={250}
-  size="sm"
+  buttonRounded
   onPageChange={(page) => console.log(page)}
 />
 ```
 
-### Large Size
+### Small Buttons
 
 ```tsx
 <Pagination
   page={1}
   pageSize={10}
   total={250}
-  size="lg"
+  buttonSize="sm"
+  onPageChange={(page) => console.log(page)}
+/>
+```
+
+### Large Buttons
+
+```tsx
+<Pagination
+  page={1}
+  pageSize={10}
+  total={250}
+  buttonSize="lg"
   onPageChange={(page) => console.log(page)}
 />
 ```
@@ -1067,15 +1096,18 @@ export default function App() {
 
 ## Props
 
-| Prop         | Type                     | Default | Description                                                       |
-| ------------ | ------------------------ | ------- | ----------------------------------------------------------------- |
-| page         | `number`                 | -       | Current active page (1-based)                                     |
-| pageSize     | `number`                 | -       | Number of items displayed per page                                |
-| total        | `number`                 | -       | Total number of items                                             |
-| siblingCount | `number`                 | `1`     | Number of page buttons displayed on each side of the current page |
-| size         | `"sm" \| "md" \| "lg"`   | `"md"`  | Size of pagination buttons                                        |
-| rounded      | `boolean`                | `false` | Displays rounded pagination buttons                               |
-| onPageChange | `(page: number) => void` | -       | Called when the active page changes                               |
+| Prop          | Type                                                            | Default     | Description                                                       |
+| ------------- | --------------------------------------------------------------- | ----------- | ----------------------------------------------------------------- |
+| page          | `number`                                                        | -           | Current active page (1-based)                                     |
+| pageSize      | `number`                                                        | -           | Number of items displayed per page                                |
+| total         | `number`                                                        | -           | Total number of items                                             |
+| siblingCount  | `number`                                                        | `1`         | Number of page buttons displayed on each side of the current page |
+| buttonVariant | `"primary" \| "secondary" \| "success" \| "warning" \| "error"` | `"primary"` | Semantic color of the pagination buttons                          |
+| buttonSize    | `"sm" \| "md" \| "lg"`                                          | `"md"`      | Size of the pagination buttons                                    |
+| buttonRounded | `boolean`                                                       | `false`     | Displays fully rounded pagination buttons                         |
+| onPageChange  | `(page: number) => void`                                        | -           | Called when the active page changes                               |
+
+> `Pagination` extends all native `<nav>` HTML attributes except the native `onChange` event.
 
 </details>
 
@@ -1096,9 +1128,16 @@ A flexible and type-safe data table component with support for custom columns, r
 ### Basic
 
 ```tsx
-import { Table } from "@xron-ui/react";
+import { Table, type TableColumn } from "@xron-ui/react";
 
-const users = [
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
+const users: User[] = [
   {
     id: "1",
     name: "John Doe",
@@ -1113,7 +1152,7 @@ const users = [
   },
 ];
 
-const columns = [
+const columns: TableColumn<User>[] = [
   {
     key: "name",
     title: "Name",

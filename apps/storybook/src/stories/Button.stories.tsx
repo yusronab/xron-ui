@@ -14,15 +14,12 @@ const meta = {
   argTypes: {
     variant: {
       control: "select",
-      options: [
-        "primary",
-        "secondary",
-        "success",
-        "warning",
-        "error",
-        "outline",
-        "ghost",
-      ],
+      options: ["primary", "secondary", "success", "warning", "error"],
+    },
+
+    appearance: {
+      control: "inline-radio",
+      options: ["solid", "outline", "ghost"],
     },
 
     size: {
@@ -58,6 +55,38 @@ type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
 
+export const Showcase: Story = {
+  render: () => (
+    <div className="flex flex-wrap gap-3">
+      <Button>Primary</Button>
+
+      <Button appearance="outline">Primary</Button>
+
+      <Button appearance="ghost">Primary</Button>
+
+      <Button variant="success">Success</Button>
+
+      <Button variant="success" appearance="outline">
+        Success
+      </Button>
+
+      <Button variant="success" appearance="ghost">
+        Success
+      </Button>
+
+      <Button variant="error">Error</Button>
+
+      <Button variant="error" appearance="outline">
+        Error
+      </Button>
+
+      <Button variant="error" appearance="ghost">
+        Error
+      </Button>
+    </div>
+  ),
+};
+
 export const Primary: Story = {
   args: {
     variant: "primary",
@@ -91,20 +120,6 @@ export const ErrorVariant: Story = {
   args: {
     variant: "error",
     children: "Error",
-  },
-};
-
-export const Outline: Story = {
-  args: {
-    variant: "outline",
-    children: "Outline",
-  },
-};
-
-export const Ghost: Story = {
-  args: {
-    variant: "ghost",
-    children: "Ghost",
   },
 };
 

@@ -1,9 +1,9 @@
-import type { VariantProps } from "class-variance-authority";
+import { ButtonProps } from "../Button";
+import { ComponentPropsWithoutRef } from "react";
 
-import { paginationItemVariants } from "../../variants/pagination";
-
-export interface PaginationProps extends VariantProps<
-  typeof paginationItemVariants
+export interface PaginationProps extends Omit<
+  ComponentPropsWithoutRef<"nav">,
+  "onChange"
 > {
   page: number;
 
@@ -18,4 +18,10 @@ export interface PaginationProps extends VariantProps<
   onPageSizeChange?(pageSize: number): void;
 
   className?: string;
+
+  buttonVariant?: NonNullable<ButtonProps["variant"]>;
+
+  buttonSize?: NonNullable<ButtonProps["size"]>;
+
+  buttonRounded?: NonNullable<ButtonProps["rounded"]>;
 }
