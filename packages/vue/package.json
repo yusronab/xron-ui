@@ -5,6 +5,18 @@
   "author": "xron-labs",
   "license": "MIT",
   "private": false,
+  "keywords": [
+    "vue",
+    "vue3",
+    "component-library",
+    "ui",
+    "design-system",
+    "tailwindcss",
+    "typescript",
+    "frontend",
+    "headless",
+    "xron-ui"
+  ],
   "type": "module",
   "sideEffects": [
     "*.css"
@@ -13,7 +25,8 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "exports": {
     ".": {
