@@ -51,7 +51,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: apps/storybook/storybook-static
+          path: dist
 
   deploy:
     needs: build
