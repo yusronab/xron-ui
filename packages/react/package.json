@@ -4,6 +4,12 @@
   "description": "React Component Library",
   "author": "xron-labs",
   "license": "MIT",
+  "homepage": "https://yusronab.github.io/xron-ui/react",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yusronab/xron-ui.git",
+    "directory": "packages/react"
+  },
   "private": false,
   "type": "module",
   "main": "./dist/index.cjs",
