@@ -39,8 +39,14 @@ jobs:
       - name: Build React package
         run: pnpm --filter ./packages/react build
 
-      - name: Build Storybook
+      - name: Build React Storybook
         run: pnpm --filter storybook build-storybook
+
+      - name: Build Vue package
+        run: pnpm --filter ./packages/vue build
+
+      - name: Build Vue Storybook
+        run: pnpm --filter storybook-vue build-storybook
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

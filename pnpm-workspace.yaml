@@ -4,3 +4,11 @@ packages:
 allowBuilds:
   '@parcel/watcher': true
   esbuild: true
+minimumReleaseAgeExclude:
+  - '@storybook/addon-docs@10.5.2'
+  - '@storybook/builder-vite@10.5.2'
+  - '@storybook/csf-plugin@10.5.2'
+  - '@storybook/react-dom-shim@10.5.2'
+  - '@storybook/vue3-vite@10.5.2'
+  - '@storybook/vue3@10.5.2'
+  - storybook@10.5.2
