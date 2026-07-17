@@ -7,10 +7,10 @@ A modern, lightweight, and customizable UI component library built for multiple 
 Currently available on npm:
 
 - [`@xron-ui/react`](https://www.npmjs.com/package/@xron-ui/react)
+- [`@xron-ui/vue`](https://www.npmjs.com/package/@xron-ui/vue)
 
 Planned packages:
 
-- `@xron-ui/vue`
 - `@xron-ui/svelte`
 - `@xron-ui/angular`
 - `@xron-ui/solid`
@@ -20,9 +20,11 @@ Planned packages:
 ```text
 .
 ├── apps/
-│   └── storybook/
+│   ├── storybook/
+│   └── storybook-vue/
 ├── packages/
-│   └── react/
+│   ├── react/
+│   └── vue/
 ├── package.json
 ├── pnpm-workspace.yaml
 └── pnpm-lock.yaml
