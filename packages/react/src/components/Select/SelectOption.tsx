@@ -8,6 +8,11 @@ type Props = Readonly<{
   selected: boolean;
   active: boolean;
 
+  renderOption?: (
+    option: Option,
+    state: { selected: boolean; active: boolean },
+  ) => React.ReactNode;
+
   optionRef?: (node: HTMLButtonElement | null) => void;
   onSelect: (option: Option) => void;
 }>;
@@ -17,6 +22,7 @@ export function SelectOption({
   labelKey,
   selected,
   active,
+  renderOption,
   optionRef,
   onSelect,
 }: Props) {
@@ -32,7 +38,12 @@ export function SelectOption({
         active && "bg-blue-100 dark:bg-blue-900",
       )}
     >
-      {getStringValue(option[labelKey])}
+      {renderOption
+        ? renderOption(option, {
+            selected,
+            active,
+          })
+        : getStringValue(option[labelKey])}
     </button>
   );
 }

@@ -6,9 +6,11 @@
   "scripts": {
     "build": "pnpm -r build",
     "build:react": "pnpm --filter react build",
+    "storybook:react": "pnpm --filter storybook storybook",
+    "build-storybook:react": "pnpm --filter storybook build-storybook",
     "build:vue": "pnpm --filter vue build",
-    "storybook": "pnpm --filter storybook storybook",
-    "build-storybook": "pnpm --filter storybook build-storybook"
+    "storybook:vue": "pnpm --filter storybook-vue storybook",
+    "build-storybook:vue": "pnpm --filter storybook-vue build-storybook"
   },
   "keywords": [],
   "author": "",

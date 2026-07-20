@@ -51,6 +51,7 @@ Form
 - [Input](#input)
 - [InputPassword](#inputpassword)
 - [InputFile](#inputfile)
+- [MultiSelect](#multiselect)
 - [Radio](#radio)
 - [Select](#select)
 - [Switch](#switch)
@@ -257,7 +258,7 @@ Additional props:
 
 </summary>
 
-A customizable dropdown select component built using a button trigger.
+A customizable dropdown select component built using a button trigger. It supports custom option rendering and custom selected value rendering.
 
 ## Example
 
@@ -269,10 +270,12 @@ const users = [
   {
     id: 1,
     name: "Administrator",
+    email: "admin@example.com",
   },
   {
     id: 2,
     name: "Member",
+    email: "member@example.com",
   },
 ];
 
@@ -286,29 +289,183 @@ export default function App() {
       labelKey="name"
       valueKey="id"
       placeholder="Select user"
+      renderOption={(option) => (
+        <div className="flex flex-col">
+          <span>{String(option.name)}</span>
+          <span className="text-xs text-gray-500">{String(option.email)}</span>
+        </div>
+      )}
+      renderValue={(option) => <span>{String(option?.name)}</span>}
       onChange={(value) => setUser(Number(value))}
     />
   );
 }
 ```
 
+### Custom Render Option
+
+```tsx
+<Select
+  options={users}
+  labelKey="name"
+  valueKey="id"
+  renderOption={(option, { selected }) => (
+    <div className="flex items-center justify-between">
+      <div>
+        <div>{String(option.name)}</div>
+        <div className="text-xs text-gray-500">{String(option.email)}</div>
+      </div>
+
+      {selected && <span>✓</span>}
+    </div>
+  )}
+/>
+```
+
+### Custom Render Value
+
+```tsx
+<Select
+  options={users}
+  labelKey="name"
+  valueKey="id"
+  renderValue={(option) =>
+    option ? (
+      <span>
+        {String(option.name)} ({String(option.email)})
+      </span>
+    ) : (
+      "Select user"
+    )
+  }
+/>
+```
+
 ## Props
 
-| Prop        | Type                      | Default        | Description                       |
-| ----------- | ------------------------- | -------------- | --------------------------------- |
-| value       | `string \| number`        | -              | Selected value                    |
-| options     | `SelectOption[]`          | `[]`           | List of options                   |
-| labelKey    | `string`                  | -              | Property used as label            |
-| valueKey    | `string`                  | -              | Property used as value            |
-| placeholder | `string`                  | `"Select..."`  | Placeholder text                  |
-| loading     | `boolean`                 | `false`        | Displays loading state            |
-| loadingText | `string`                  | `"Loading..."` | Loading message                   |
-| emptyText   | `string`                  | `"No data"`    | Message when there are no options |
-| disabled    | `boolean`                 | `false`        | Disables the select               |
-| size        | `"sm" \| "md" \| "lg"`    | `"md"`         | Select size                       |
-| onChange    | `(value, option) => void` | -              | Called when an option is selected |
+| Prop         | Type                           | Default        | Description                              |
+| ------------ | ------------------------------ | -------------- | ---------------------------------------- |
+| value        | `string \| number`             | -              | Selected value                           |
+| options      | `SelectOption[]`               | `[]`           | List of options                          |
+| labelKey     | `string`                       | -              | Property used as label                   |
+| valueKey     | `string`                       | -              | Property used as value                   |
+| placeholder  | `string`                       | `"Select..."`  | Placeholder text                         |
+| loading      | `boolean`                      | `false`        | Displays loading state                   |
+| loadingText  | `string`                       | `"Loading..."` | Loading message                          |
+| emptyText    | `string`                       | `"No data"`    | Message when there are no options        |
+| disabled     | `boolean`                      | `false`        | Disables the select                      |
+| size         | `"sm" \| "md" \| "lg"`         | `"md"`         | Select size                              |
+| renderOption | `(option, state) => ReactNode` | -              | Custom renderer for each dropdown option |
+| renderValue  | `(option) => ReactNode`        | -              | Custom renderer for the selected value   |
+| onChange     | `(value, option) => void`      | -              | Called when an option is selected        |
 
 > `Select` extends all native `<button>` HTML attributes except the native `onChange` event. Use the component's `onChange` callback to receive the selected value and option.
+
+</details>
+
+---
+
+<details>
+
+<summary>
+
+# MultiSelect
+
+</summary>
+
+A customizable dropdown component that allows selecting multiple options. It includes built-in checkboxes, a **Select All** option, custom option rendering, and custom selected value rendering.
+
+## Example
+
+```tsx
+import { useState } from "react";
+import { MultiSelect } from "@xron-ui/react";
+
+const users = [
+  {
+    id: 1,
+    name: "Administrator",
+  },
+  {
+    id: 2,
+    name: "Member",
+  },
+  {
+    id: 3,
+    name: "Guest",
+  },
+];
+
+export default function App() {
+  const [usersId, setUsersId] = useState<Array<string | number>>([]);
+
+  return (
+    <MultiSelect
+      values={usersId}
+      options={users}
+      labelKey="name"
+      valueKey="id"
+      placeholder="Select users"
+      onChange={(values) => setUsersId(values)}
+    />
+  );
+}
+```
+
+### Custom Render Option
+
+```tsx
+<MultiSelect
+  options={users}
+  labelKey="name"
+  valueKey="id"
+  renderOption={(option, { selected }) => (
+    <div className="flex items-center justify-between w-full">
+      <div>
+        <div>{String(option.name)}</div>
+        <div className="text-xs text-gray-500">User account</div>
+      </div>
+
+      {selected && <span className="text-xs text-blue-500">Selected</span>}
+    </div>
+  )}
+/>
+```
+
+### Custom Render Value
+
+```tsx
+<MultiSelect
+  options={users}
+  labelKey="name"
+  valueKey="id"
+  renderValue={(options) =>
+    options.length > 0 ? `${options.length} user(s) selected` : "Select users"
+  }
+/>
+```
+
+## Props
+
+| Prop         | Type                           | Default        | Description                                |
+| ------------ | ------------------------------ | -------------- | ------------------------------------------ |
+| values       | `(string \| number)[]`         | `[]`           | Selected values                            |
+| options      | `MultiSelectOption[]`          | `[]`           | List of options                            |
+| labelKey     | `string`                       | -              | Property used as label                     |
+| valueKey     | `string`                       | -              | Property used as value                     |
+| placeholder  | `string`                       | `"Select..."`  | Placeholder text                           |
+| loading      | `boolean`                      | `false`        | Displays loading state                     |
+| loadingText  | `string`                       | `"Loading..."` | Loading message                            |
+| emptyText    | `string`                       | `"No data"`    | Message when there are no options          |
+| disabled     | `boolean`                      | `false`        | Disables the component                     |
+| size         | `"sm" \| "md" \| "lg"`         | `"md"`         | Component size                             |
+| renderOption | `(option, state) => ReactNode` | -              | Custom renderer for each option            |
+| renderValue  | `(options) => ReactNode`       | -              | Custom renderer for selected values        |
+| onChange     | `(values, options) => void`    | -              | Called whenever the selected values change |
+
+`MultiSelect` automatically displays a **Select All** checkbox at the top of the dropdown. It also supports the indeterminate state when only some options are selected.
+
+> `MultiSelect` extends all native `<button>` HTML attributes except the native `value` and `onChange` attributes. Use the component's `onChange` callback to receive the selected values and selected option objects.
 
 </details>
 
@@ -427,24 +584,25 @@ async function searchUsers(keyword: string) {
 
 ## Props
 
-| Prop        | Type                                 | Default        | Description                                           |
-| ----------- | ------------------------------------ | -------------- | ----------------------------------------------------- |
-| value       | `string \| number`                   | -              | Selected value                                        |
-| options     | `AutocompleteOption[]`               | `[]`           | List of available options                             |
-| labelKey    | `string`                             | -              | Property used as option label                         |
-| valueKey    | `string`                             | -              | Property used as option value                         |
-| placeholder | `string`                             | -              | Input placeholder                                     |
-| loading     | `boolean`                            | `false`        | Displays loading state                                |
-| loadingText | `string`                             | `"Loading..."` | Loading message                                       |
-| emptyText   | `string`                             | `"No data"`    | Message when no options are available                 |
-| disabled    | `boolean`                            | `false`        | Disables the component                                |
-| clearable   | `boolean`                            | `false`        | Displays a clear button                               |
-| debounce    | `number`                             | `300`          | Delay before calling `onSearch`                       |
-| size        | `"sm" \| "md" \| "lg"`               | `"md"`         | Input size                                            |
-| rounded     | `boolean`                            | `false`        | Fully rounded input                                   |
-| error       | `boolean`                            | `false`        | Displays error state                                  |
-| onChange    | `(value, option) => void`            | -              | Called when an option is selected                     |
-| onSearch    | `(keyword) => void \| Promise<void>` | -              | Called after debounce when the search keyword changes |
+| Prop         | Type                                 | Default        | Description                                           |
+| ------------ | ------------------------------------ | -------------- | ----------------------------------------------------- |
+| value        | `string \| number`                   | -              | Selected value                                        |
+| options      | `AutocompleteOption[]`               | `[]`           | List of available options                             |
+| labelKey     | `string`                             | -              | Property used as option label                         |
+| valueKey     | `string`                             | -              | Property used as option value                         |
+| placeholder  | `string`                             | -              | Input placeholder                                     |
+| loading      | `boolean`                            | `false`        | Displays loading state                                |
+| loadingText  | `string`                             | `"Loading..."` | Loading message                                       |
+| emptyText    | `string`                             | `"No data"`    | Message when no options are available                 |
+| disabled     | `boolean`                            | `false`        | Disables the component                                |
+| clearable    | `boolean`                            | `false`        | Displays a clear button                               |
+| debounce     | `number`                             | `300`          | Delay before calling `onSearch`                       |
+| size         | `"sm" \| "md" \| "lg"`               | `"md"`         | Input size                                            |
+| rounded      | `boolean`                            | `false`        | Fully rounded input                                   |
+| error        | `boolean`                            | `false`        | Displays error state                                  |
+| renderOption | `(option, state) => ReactNode`       | -              | Custom renderer for each option                       |
+| onChange     | `(value, option) => void`            | -              | Called when an option is selected                     |
+| onSearch     | `(keyword) => void \| Promise<void>` | -              | Called after debounce when the search keyword changes |
 
 </details>
 

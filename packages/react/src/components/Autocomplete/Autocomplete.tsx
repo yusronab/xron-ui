@@ -5,13 +5,18 @@ import { cn, getStringValue } from "../../utils";
 import { autocompleteVariants } from "../../variants/autocomplete";
 
 import { Spinner } from "../Spinner";
-import { SelectOption } from "../Select/SelectOption";
 import { CloseIcon } from "../../icons";
 
-import type {
-  AutocompleteOption as Option,
-  AutocompleteProps,
-} from "./Autocomplete.types";
+import type { AutocompleteProps } from "./Autocomplete.types";
+
+import {
+  useDropdown,
+  useDropdownPosition,
+  useKeyboardNavigation,
+  useOutsideClick,
+} from "../../hooks";
+import type { SelectOption as Option } from "../Select";
+import { SelectOption } from "../Select/SelectOption";
 
 export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
   (
@@ -20,41 +25,36 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       size,
       rounded,
       error,
-
       value,
       options,
       loading,
       disabled,
       placeholder,
-
       labelKey,
       valueKey,
-
       loadingText = "Loading...",
       emptyText = "No data",
-
       clearable,
       debounce,
-
       clearIcon,
       clearIconClassName,
-
       onSearch,
       onChange,
+      renderOption,
       ...props
     },
     ref,
   ) => {
     const rootRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
-    const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const [open, setOpen] = useState(false);
     const [keyword, setKeyword] = useState("");
     const [searchKeyword, setSearchKeyword] = useState("");
-    const [activeIndex, setActiveIndex] = useState(-1);
-    const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({});
+
+    const { open, openDropdown, closeDropdown } = useDropdown({
+      disabled,
+    });
 
     function setRefs(node: HTMLInputElement | null) {
       inputRef.current = node;
@@ -88,106 +88,32 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       }
     }, [value, options, labelKey, valueKey]);
 
-    function updateDropdownPosition() {
-      if (!inputRef.current) return;
-
-      const rect = inputRef.current.getBoundingClientRect();
-
-      setDropdownStyle({
-        position: "fixed",
-        top: rect.bottom + 8,
-        left: rect.left,
-        width: rect.width,
-        zIndex: 9999,
-      });
-    }
+    const { dropdownStyle } = useDropdownPosition({
+      open,
+      triggerRef: inputRef,
+    });
 
     function handleSelect(option: Option) {
       setKeyword(getStringValue(option[labelKey]));
 
       onChange?.(option[valueKey] as string | number, option);
 
-      setOpen(false);
+      closeDropdown();
     }
 
-    function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
-      if (!open) return;
-
-      switch (event.key) {
-        case "ArrowDown":
-          event.preventDefault();
-
-          setActiveIndex((prev) =>
-            prev < filteredOptions.length - 1 ? prev + 1 : 0,
-          );
-
-          break;
-
-        case "ArrowUp":
-          event.preventDefault();
-
-          setActiveIndex((prev) =>
-            prev > 0 ? prev - 1 : filteredOptions.length - 1,
-          );
-
-          break;
-
-        case "Enter":
-          event.preventDefault();
-
-          if (activeIndex >= 0) {
-            handleSelect(filteredOptions[activeIndex]);
-          }
-
-          break;
-
-        case "Escape":
-          setOpen(false);
-          break;
-      }
-    }
-
-    useEffect(() => {
-      function outside(event: MouseEvent) {
-        const target = event.target as Node;
-
-        if (
-          rootRef.current?.contains(target) ||
-          dropdownRef.current?.contains(target)
-        ) {
-          return;
-        }
-
-        setOpen(false);
-      }
-
-      document.addEventListener("mousedown", outside);
-
-      return () => document.removeEventListener("mousedown", outside);
-    }, []);
-
-    useEffect(() => {
-      if (!open) return;
-
-      setActiveIndex(-1);
-      updateDropdownPosition();
-
-      window.addEventListener("resize", updateDropdownPosition);
-      window.addEventListener("scroll", updateDropdownPosition, true);
-
-      return () => {
-        window.removeEventListener("resize", updateDropdownPosition);
-        window.removeEventListener("scroll", updateDropdownPosition, true);
-      };
-    }, [open]);
-
-    useEffect(() => {
-      if (activeIndex < 0) return;
-
-      optionRefs.current[activeIndex]?.scrollIntoView({
-        block: "nearest",
+    const { activeIndex, optionRefs, handleKeyDown, setActiveIndex } =
+      useKeyboardNavigation({
+        open,
+        options: filteredOptions,
+        selectedIndex: -1,
+        onSelect: handleSelect,
+        onClose: closeDropdown,
       });
-    }, [activeIndex]);
+
+    useOutsideClick({
+      refs: [rootRef, dropdownRef],
+      onOutsideClick: closeDropdown,
+    });
 
     useEffect(() => {
       const timer = window.setTimeout(() => {
@@ -226,6 +152,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
           labelKey={labelKey}
           selected={getStringValue(option[valueKey]) === String(value)}
           active={activeIndex === index}
+          renderOption={renderOption}
           optionRef={(node) => {
             optionRefs.current[index] = node;
           }}
@@ -243,11 +170,11 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             placeholder={placeholder}
             disabled={disabled}
             onKeyDown={handleKeyDown}
-            onFocus={() => setOpen(true)}
+            onFocus={openDropdown}
             onChange={(e) => {
               setKeyword(e.target.value);
               setActiveIndex(-1);
-              setOpen(true);
+              openDropdown();
             }}
             className={cn(
               autocompleteVariants({
@@ -265,7 +192,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
               type="button"
               onClick={() => {
                 setKeyword("");
-                setOpen(false);
+                closeDropdown();
                 onChange?.("", {});
               }}
               className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"

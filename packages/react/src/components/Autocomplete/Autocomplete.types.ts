@@ -1,18 +1,16 @@
-import type { InputHTMLAttributes } from "react";
+import type { InputHTMLAttributes, ReactNode } from "react";
 import type { VariantProps } from "class-variance-authority";
 
 import { autocompleteVariants } from "../../variants/autocomplete";
-
-export interface AutocompleteOption {
-  [key: string]: unknown;
-}
+import { SelectOption } from "../Select";
+import { RenderOptionState } from "../Select/Select.types";
 
 export interface AutocompleteProps
   extends
     Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "size">,
     VariantProps<typeof autocompleteVariants> {
   value?: string | number;
-  options: AutocompleteOption[];
+  options: SelectOption[];
   labelKey: string;
   valueKey: string;
   loading?: boolean;
@@ -24,5 +22,6 @@ export interface AutocompleteProps
   clearIconClassName?: string;
 
   onSearch?: (keyword: string) => void | Promise<void>;
-  onChange?: (value: string | number, option: AutocompleteOption) => void;
+  onChange?: (value: string | number, option: SelectOption) => void;
+  renderOption?: (option: SelectOption, state: RenderOptionState) => ReactNode;
 }

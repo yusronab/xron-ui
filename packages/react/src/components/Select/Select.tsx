@@ -1,5 +1,5 @@
 import { createPortal } from "react-dom";
-import { forwardRef, useEffect, useMemo, useRef, useState } from "react";
+import { forwardRef, useMemo, useRef } from "react";
 
 import { cn } from "../../utils";
 import { selectVariants } from "../../variants/select";
@@ -8,6 +8,13 @@ import type { SelectOption as Option, SelectProps } from "./Select.types";
 import { Spinner } from "../Spinner";
 import { SelectOption } from "./SelectOption";
 import { ChevronDownIcon } from "../../icons";
+
+import {
+  useDropdown,
+  useDropdownPosition,
+  useKeyboardNavigation,
+  useOutsideClick,
+} from "../../hooks";
 
 export const Select = forwardRef<HTMLButtonElement, SelectProps>(
   (
@@ -25,6 +32,8 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
       loadingText = "Loading...",
       emptyText = "No data",
       disabled,
+      renderValue,
+      renderOption,
       onChange,
       ...props
     },
@@ -33,44 +42,56 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
     const rootRef = useRef<HTMLDivElement>(null);
     const triggerRef = useRef<HTMLButtonElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-    const [open, setOpen] = useState(false);
-    const [activeIndex, setActiveIndex] = useState(-1);
-    const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({});
+    const { open, closeDropdown, toggleDropdown } = useDropdown({
+      disabled,
+    });
 
     const selectedOption = useMemo(() => {
       return options.find((item) => String(item[valueKey]) === String(value));
     }, [options, value, valueKey]);
 
-    const selectedText = selectedOption
-      ? String(selectedOption[labelKey])
-      : placeholder;
+    const selectedIndex = useMemo(() => {
+      return options.findIndex(
+        (option) => String(option[valueKey]) === String(value),
+      );
+    }, [options, value, valueKey]);
 
-    useEffect(() => {
-      function handleOutside(event: MouseEvent) {
-        const target = event.target as Node;
-
-        if (
-          rootRef.current?.contains(target) ||
-          dropdownRef.current?.contains(target)
-        ) {
-          return;
-        }
-
-        setOpen(false);
+    const selectedText = (() => {
+      if (!selectedOption) {
+        return placeholder;
       }
 
-      document.addEventListener("mousedown", handleOutside);
+      if (renderValue) {
+        return renderValue(selectedOption);
+      }
 
-      return () => document.removeEventListener("mousedown", handleOutside);
-    }, []);
+      return String(selectedOption[labelKey]);
+    })();
 
     function handleSelect(option: Option) {
       onChange?.(option[valueKey] as string | number, option);
 
-      setOpen(false);
+      closeDropdown();
     }
+
+    useOutsideClick({
+      refs: [rootRef, dropdownRef],
+      onOutsideClick: closeDropdown,
+    });
+
+    const { dropdownStyle } = useDropdownPosition({
+      open,
+      triggerRef,
+    });
+
+    const { activeIndex, optionRefs, handleKeyDown } = useKeyboardNavigation({
+      open,
+      options,
+      selectedIndex,
+      onSelect: handleSelect,
+      onClose: closeDropdown,
+    });
 
     function setRefs(node: HTMLButtonElement | null) {
       triggerRef.current = node;
@@ -80,116 +101,6 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
       } else if (ref) {
         ref.current = node;
       }
-    }
-
-    function updateDropdownPosition() {
-      if (!triggerRef.current) {
-        return;
-      }
-
-      const rect = triggerRef.current.getBoundingClientRect();
-
-      setDropdownStyle({
-        position: "fixed",
-        top: rect.bottom + 8,
-        left: rect.left,
-        width: rect.width,
-        zIndex: 9999,
-      });
-    }
-
-    function handleKeyDown(event: React.KeyboardEvent<HTMLButtonElement>) {
-      if (!open) {
-        if (
-          event.key === "ArrowDown" ||
-          event.key === "ArrowUp" ||
-          event.key === "Enter" ||
-          event.key === " "
-        ) {
-          event.preventDefault();
-          setOpen(true);
-        }
-
-        return;
-      }
-
-      switch (event.key) {
-        case "ArrowDown":
-          event.preventDefault();
-
-          setActiveIndex((prev) => Math.min(prev + 1, options.length - 1));
-          break;
-
-        case "ArrowUp":
-          event.preventDefault();
-
-          setActiveIndex((prev) => Math.max(prev - 1, 0));
-          break;
-
-        case "Enter":
-          event.preventDefault();
-
-          if (activeIndex >= 0) {
-            handleSelect(options[activeIndex]);
-          }
-
-          break;
-
-        case "Escape":
-          event.preventDefault();
-          setOpen(false);
-          break;
-      }
-    }
-
-    useEffect(() => {
-      if (!open) {
-        setActiveIndex(-1);
-        return;
-      }
-
-      const selectedIndex = options.findIndex(
-        (option) => String(option[valueKey]) === String(value),
-      );
-
-      setActiveIndex(Math.max(selectedIndex, 0));
-    }, [open, options, value, valueKey]);
-
-    useEffect(() => {
-      if (!open) return;
-
-      function handleKeyDown(e: KeyboardEvent) {
-        if (e.key === "Escape") {
-          setOpen(false);
-        }
-      }
-
-      setActiveIndex(-1);
-      updateDropdownPosition();
-
-      window.addEventListener("resize", updateDropdownPosition);
-      window.addEventListener("scroll", updateDropdownPosition, true);
-      document.addEventListener("keydown", handleKeyDown);
-
-      return () => {
-        window.removeEventListener("resize", updateDropdownPosition);
-        window.removeEventListener("scroll", updateDropdownPosition, true);
-        document.removeEventListener("keydown", handleKeyDown);
-      };
-    }, [open]);
-
-    useEffect(() => {
-      if (activeIndex < 0) return;
-
-      optionRefs.current[activeIndex]?.scrollIntoView({
-        block: "nearest",
-      });
-    }, [activeIndex]);
-
-    function toggle() {
-      if (disabled) return;
-
-      setOpen((prev) => !prev);
     }
 
     const dropdownContent = (() => {
@@ -218,6 +129,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
           selected={String(option[valueKey]) === String(value)}
           onSelect={handleSelect}
           active={index === activeIndex}
+          renderOption={renderOption}
           optionRef={(node) => {
             optionRefs.current[index] = node;
           }}
@@ -231,7 +143,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
           ref={setRefs}
           type="button"
           disabled={disabled}
-          onClick={toggle}
+          onClick={toggleDropdown}
           onKeyDown={handleKeyDown}
           className={cn(
             selectVariants({

@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Select } from "@xron-ui/react";
+import { MultiSelect } from "@xron-ui/react";
 
 const options = [
   {
@@ -24,12 +24,12 @@ const options = [
 ];
 
 const meta = {
-  title: "Components/Select",
-  component: Select,
+  title: "Components/MultiSelect",
+  component: MultiSelect,
   tags: ["autodocs"],
 
   args: {
-    placeholder: "Select framework",
+    placeholder: "Select frameworks",
     options,
     labelKey: "name",
     valueKey: "id",
@@ -78,30 +78,19 @@ const meta = {
       control: false,
     },
   },
-} satisfies Meta<typeof Select>;
+} satisfies Meta<typeof MultiSelect>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {
-  render: function Render(args) {
-    const [value, setValue] = useState<string | number>();
-
-    return (
-      <div className="max-w-sm">
-        <Select {...args} value={value} onChange={setValue} />
-      </div>
-    );
-  },
-};
-
-type ShowcaseSectionProps = Readonly<{
+function ShowcaseSection({
+  title,
+  children,
+}: Readonly<{
   title: string;
   children: React.ReactNode;
-}>;
-
-function ShowcaseSection({ title, children }: ShowcaseSectionProps) {
+}>) {
   return (
     <div className="space-y-2">
       <h3 className="font-semibold">{title}</h3>
@@ -111,82 +100,86 @@ function ShowcaseSection({ title, children }: ShowcaseSectionProps) {
 }
 
 function ShowcaseContent() {
-  const [value, setValue] = useState<string | number>();
+  const [values, setValues] = useState<Array<string | number>>([]);
 
   return (
     <div className="flex max-w-sm flex-col gap-6">
       <ShowcaseSection title="Default">
-        <Select
-          value={value}
+        <MultiSelect
+          values={values}
           options={options}
           labelKey="name"
           valueKey="id"
-          onChange={setValue}
+          onChange={setValues}
         />
       </ShowcaseSection>
 
       <ShowcaseSection title="Custom Option">
-        <Select
-          value={value}
+        <MultiSelect
+          values={values}
           options={options}
           labelKey="name"
           valueKey="id"
-          onChange={setValue}
-          renderOption={(option, { selected }) => (
-            <div className="flex w-full items-center justify-between">
-              <span>{String(option.name)}</span>
+          onChange={setValues}
+          renderOption={(option) => (
+            <div className="flex flex-col">
+              <span className="font-medium">{String(option.name)}</span>
 
-              {selected && (
-                <span className="text-xs font-medium text-blue-600">
-                  Selected
-                </span>
-              )}
+              <span className="text-xs text-gray-500">Frontend Framework</span>
             </div>
           )}
         />
       </ShowcaseSection>
 
       <ShowcaseSection title="Custom Value">
-        <Select
-          value={value}
+        <MultiSelect
+          values={values}
           options={options}
           labelKey="name"
           valueKey="id"
-          onChange={setValue}
-          renderValue={(option) =>
-            option ? (
-              <span className="font-semibold text-blue-600">
-                🚀 {String(option.name)}
-              </span>
-            ) : (
-              "Select framework"
-            )
+          onChange={setValues}
+          renderValue={(options) =>
+            options.length > 0
+              ? `${options.length} framework(s) selected`
+              : "Select frameworks"
           }
         />
       </ShowcaseSection>
 
       <ShowcaseSection title="Loading">
-        <Select loading options={options} labelKey="name" valueKey="id" />
+        <MultiSelect loading options={options} labelKey="name" valueKey="id" />
       </ShowcaseSection>
 
       <ShowcaseSection title="Empty">
-        <Select options={[]} labelKey="name" valueKey="id" />
+        <MultiSelect options={[]} labelKey="name" valueKey="id" />
       </ShowcaseSection>
 
       <ShowcaseSection title="Disabled">
-        <Select disabled options={options} labelKey="name" valueKey="id" />
+        <MultiSelect disabled options={options} labelKey="name" valueKey="id" />
       </ShowcaseSection>
 
       <ShowcaseSection title="Error">
-        <Select error options={options} labelKey="name" valueKey="id" />
+        <MultiSelect error options={options} labelKey="name" valueKey="id" />
       </ShowcaseSection>
 
       <ShowcaseSection title="Rounded">
-        <Select rounded options={options} labelKey="name" valueKey="id" />
+        <MultiSelect rounded options={options} labelKey="name" valueKey="id" />
       </ShowcaseSection>
     </div>
   );
 }
+
+export const Playground: Story = {
+  render: function Render(args) {
+    const [values, setValues] = useState<Array<string | number>>([]);
+
+    return (
+      <div className="max-w-sm">
+        <MultiSelect {...args} values={values} onChange={setValues} />
+      </div>
+    );
+  },
+};
 
 export const Showcase: Story = {
   render: () => <ShowcaseContent />,
@@ -196,23 +189,19 @@ export const Default: Story = {};
 
 export const CustomOption: Story = {
   render: function Render(args) {
-    const [value, setValue] = useState<string | number>();
+    const [values, setValues] = useState<Array<string | number>>([]);
 
     return (
       <div className="max-w-sm">
-        <Select
+        <MultiSelect
           {...args}
-          value={value}
-          onChange={setValue}
-          renderOption={(option, { selected }) => (
-            <div className="flex w-full items-center justify-between">
-              <span>{String(option.name)}</span>
+          values={values}
+          onChange={setValues}
+          renderOption={(option) => (
+            <div className="flex flex-col">
+              <span className="font-medium">{String(option.name)}</span>
 
-              {selected && (
-                <span className="text-xs font-medium text-blue-600">
-                  Selected
-                </span>
-              )}
+              <span className="text-xs text-gray-500">Frontend Framework</span>
             </div>
           )}
         />
@@ -223,22 +212,18 @@ export const CustomOption: Story = {
 
 export const CustomValue: Story = {
   render: function Render(args) {
-    const [value, setValue] = useState<string | number>();
+    const [values, setValues] = useState<Array<string | number>>([]);
 
     return (
       <div className="max-w-sm">
-        <Select
+        <MultiSelect
           {...args}
-          value={value}
-          onChange={setValue}
-          renderValue={(option) =>
-            option ? (
-              <span className="font-semibold text-blue-600">
-                🚀 {String(option.name)}
-              </span>
-            ) : (
-              "Select framework"
-            )
+          values={values}
+          onChange={setValues}
+          renderValue={(options) =>
+            options.length > 0
+              ? `${options.length} framework(s) selected`
+              : "Select frameworks"
           }
         />
       </div>
