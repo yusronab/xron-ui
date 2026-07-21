@@ -943,3 +943,110 @@ All native checkbox attributes such as `disabled`, `name`, `id`, `required`, and
 </details>
 
 ---
+
+<details>
+
+<summary>
+
+# Select
+
+</summary>
+
+Select allows users to choose a single option from a dropdown list. It supports loading, empty state, clearable selections, custom option rendering, custom value rendering, and integrates with FormControl.
+
+## Example
+
+### Basic
+
+```vue
+<Select v-model="fruit" :options="options" labelKey="name" valueKey="id" />
+```
+
+### Clearable
+
+```vue
+<Select
+  v-model="fruit"
+  :options="options"
+  labelKey="name"
+  valueKey="id"
+  clearable
+></Select>
+```
+
+### Loading
+
+```vue
+<Select loading :options="[]" labelKey="name" valueKey="id" />
+```
+
+### Custom Option
+
+```vue
+<Select v-model="fruit" :options="options" labelKey="name" valueKey="id">
+  <template #option="{ option }">
+    🍎 {{ option.name }}
+  </template>
+</Select>
+```
+
+### Custom Selected Value
+
+```vue
+<Select v-model="fruit" :options="options" labelKey="name" valueKey="id">
+  <template #value="{ option }">
+    {{ option?.name ?? "Choose fruit" }}
+  </template>
+</Select>
+```
+
+### With FormControl
+
+```vue
+<FormControl label="Country" helperText="Select your country.">
+  <Select
+    v-model="country"
+    :options="countries"
+    labelKey="name"
+    valueKey="id"
+  />
+</FormControl>
+```
+
+## Props
+
+| Prop        | Type                   | Default        | Description                    |
+| ----------- | ---------------------- | -------------- | ------------------------------ |
+| modelValue  | `string \| number`     | -              | Selected value                 |
+| options     | `SelectOption[]`       | **required**   | Options list                   |
+| labelKey    | `string`               | **required**   | Object key used as label       |
+| valueKey    | `string`               | **required**   | Object key used as value       |
+| placeholder | `string`               | `"Select..."`  | Placeholder text               |
+| loading     | `boolean`              | `false`        | Displays loading state         |
+| loadingText | `string`               | `"Loading..."` | Loading text                   |
+| emptyText   | `string`               | `"No data"`    | Empty state text               |
+| clearable   | `boolean`              | `false`        | Allows clearing selected value |
+| size        | `"sm" \| "md" \| "lg"` | `"md"`         | Component size                 |
+| rounded     | `boolean`              | `false`        | Fully rounded style            |
+| error       | `boolean`              | `false`        | Error state                    |
+| disabled    | `boolean`              | `false`        | Disabled state                 |
+
+### Events
+
+| Event             | Description                       |
+| ----------------- | --------------------------------- |
+| update:modelValue | Fired when selected value changes |
+| change            | Fired when selection changes      |
+
+### Slots
+
+| Slot    | Description                    |
+| ------- | ------------------------------ |
+| default | Default dropdown content       |
+| option  | Custom option renderer         |
+| value   | Custom selected value renderer |
+| clear   | Custom clear icon              |
+
+</details>
+
+---
