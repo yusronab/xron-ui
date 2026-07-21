@@ -47,6 +47,7 @@ Form
 - [Input](#input)
 - [InputPassword](#inputpassword)
 - [InputFile](#inputfile)
+- [Label](#label)
 - [Radio](#radio)
 - [Select](#select)
 - [Switch](#switch)
@@ -468,6 +469,122 @@ The component also supports all native HTML input attributes such as:
 | Event               | Payload  | Description                           |
 | ------------------- | -------- | ------------------------------------- |
 | `update:modelValue` | `string` | Fired when the password value changes |
+
+</details>
+
+---
+
+<details>
+
+<summary>
+
+# Label
+
+</summary>
+
+Label provides an accessible text label for form controls such as inputs, selects, checkboxes, and other interactive elements.
+
+## Example
+
+### Basic
+
+```vue
+<Label htmlFor="email">
+  Email Address
+</Label>
+
+<Input id="email" />
+```
+
+### With FormControl
+
+```vue
+<FormControl label="Email Address">
+  <Input />
+</FormControl>
+```
+
+When used inside `FormControl`, the `htmlFor` association is handled automatically.
+
+## Props
+
+| Prop    | Type     | Default | Description                                                                        |
+| ------- | -------- | ------- | ---------------------------------------------------------------------------------- |
+| htmlFor | `string` | —       | Associates the label with a form control. Optional when used inside `FormControl`. |
+
+## Slots
+
+| Slot    | Description   |
+| ------- | ------------- |
+| default | Label content |
+
+</details>
+
+---
+
+<details>
+
+<summary>
+
+# FormControl
+
+</summary>
+
+FormControl groups a form field with its associated label, helper text, and error message. It also automatically associates labels with supported form components such as `Input`, `InputPassword`, and `InputFile`.
+
+## Example
+
+### Basic
+
+```vue
+<FormControl label="Email">
+  <Input v-model="email" />
+</FormControl>
+```
+
+### Helper Text
+
+```vue
+<FormControl label="Email" helperText="We'll never share your email.">
+  <Input v-model="email" />
+</FormControl>
+```
+
+### Error
+
+```vue
+<FormControl label="Email" error="Email is required.">
+  <Input
+    v-model="email"
+    error
+  />
+</FormControl>
+```
+
+### Required
+
+```vue
+<FormControl label="Password" required>
+  <InputPassword
+    v-model="password"
+  />
+</FormControl>
+```
+
+## Props
+
+| Prop       | Type      | Default | Description                                           |
+| ---------- | --------- | ------- | ----------------------------------------------------- |
+| label      | `string`  | —       | Label displayed above the form control                |
+| helperText | `string`  | —       | Helper text displayed below the form control          |
+| error      | `string`  | —       | Error message displayed below the form control        |
+| required   | `boolean` | `false` | Displays a required indicator (`*`) next to the label |
+
+## Slots
+
+| Slot    | Description                                                |
+| ------- | ---------------------------------------------------------- |
+| default | The form control component (Input, Select, Checkbox, etc.) |
 
 </details>
 
