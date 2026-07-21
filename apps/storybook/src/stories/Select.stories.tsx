@@ -62,6 +62,10 @@ const meta = {
       control: "boolean",
     },
 
+    clearable: {
+      control: "boolean",
+    },
+
     placeholder: {
       control: "text",
     },
@@ -114,7 +118,7 @@ function ShowcaseContent() {
   const [value, setValue] = useState<string | number>();
 
   return (
-    <div className="flex max-w-sm flex-col gap-6">
+    <div className="flex max-w-sm flex-col gap-8 space-y-8">
       <ShowcaseSection title="Default">
         <Select
           value={value}
@@ -167,6 +171,17 @@ function ShowcaseContent() {
 
       <ShowcaseSection title="Loading">
         <Select loading options={options} labelKey="name" valueKey="id" />
+      </ShowcaseSection>
+
+      <ShowcaseSection title="Clearable">
+        <Select
+          clearable
+          value={value}
+          options={options}
+          onChange={setValue}
+          labelKey="name"
+          valueKey="id"
+        />
       </ShowcaseSection>
 
       <ShowcaseSection title="Empty">
@@ -249,6 +264,12 @@ export const CustomValue: Story = {
 export const Loading: Story = {
   args: {
     loading: true,
+  },
+};
+
+export const Clearable: Story = {
+  args: {
+    clearable: true,
   },
 };
 

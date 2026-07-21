@@ -1,9 +1,9 @@
 export interface ButtonProps {
-  variant?: "primary" | "secondary" | "success" | "warning" | "danger";
+  variant?: "primary" | "secondary" | "success" | "warning" | "error";
 
-  appearance?: "solid" | "outline" | "ghost" | "link";
+  appearance?: "solid" | "outline" | "ghost" | null;
 
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  size?: "sm" | "md" | "lg";
 
   rounded?: boolean;
 

@@ -7,7 +7,7 @@ import type { SelectOption as Option, SelectProps } from "./Select.types";
 
 import { Spinner } from "../Spinner";
 import { SelectOption } from "./SelectOption";
-import { ChevronDownIcon } from "../../icons";
+import { ChevronDownIcon, CloseIcon } from "../../icons";
 
 import {
   useDropdown,
@@ -32,6 +32,9 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
       loadingText = "Loading...",
       emptyText = "No data",
       disabled,
+      clearable,
+      clearIcon,
+      clearIconClassName,
       renderValue,
       renderOption,
       onChange,
@@ -103,6 +106,23 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
       }
     }
 
+    const showClear =
+      clearable &&
+      !disabled &&
+      !loading &&
+      value !== undefined &&
+      value !== null &&
+      value !== "";
+
+    function handleClear(e: React.MouseEvent) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      onChange?.(undefined);
+
+      closeDropdown();
+    }
+
     const dropdownContent = (() => {
       if (loading) {
         return (
@@ -155,11 +175,32 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
           )}
           {...props}
         >
-          <span className="truncate">{selectedText}</span>
+          <span className="truncate flex-1 text-left">{selectedText}</span>
 
-          <ChevronDownIcon
-            className={cn("transition-transform", open && "rotate-180")}
-          />
+          <div className="flex items-center gap-2">
+            {showClear && (
+              <button
+                type="button"
+                tabIndex={-1}
+                onClick={handleClear}
+                aria-label="Clear selection"
+                className="flex items-center justify-center"
+              >
+                {clearIcon ?? (
+                  <CloseIcon
+                    className={cn(
+                      "h-4 w-4 text-gray-400 hover:text-gray-600",
+                      clearIconClassName,
+                    )}
+                  />
+                )}
+              </button>
+            )}
+
+            <ChevronDownIcon
+              className={cn("transition-transform", open && "rotate-180")}
+            />
+          </div>
         </button>
 
         {open &&

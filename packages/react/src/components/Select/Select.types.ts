@@ -24,10 +24,14 @@ export interface SelectProps
   loading?: boolean;
   emptyText?: string;
   loadingText?: string;
+  clearable?: boolean;
+  clearIcon?: ReactNode;
+  clearIconClassName?: string;
 
   renderOption?: (option: SelectOption, state: RenderOptionState) => ReactNode;
-
   renderValue?: (option: SelectOption | undefined) => ReactNode;
-
-  onChange?: (value: string | number, option: SelectOption) => void;
+  onChange?: (
+    value: string | number | undefined,
+    option?: SelectOption,
+  ) => void;
 }
