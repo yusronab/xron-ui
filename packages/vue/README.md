@@ -145,3 +145,81 @@ Buttons allow users to perform actions and support multiple semantic colors, vis
 </details>
 
 ---
+
+<details>
+
+<summary>
+
+# Badge
+
+</summary>
+
+Badges are used to display status, labels, categories, or short pieces of information. They support multiple semantic colors, outline styles, and sizes.
+
+## Example
+
+### Solid
+
+```vue
+<Badge>
+  Default
+</Badge>
+
+<Badge variant="success">
+  Success
+</Badge>
+
+<Badge variant="danger">
+  Danger
+</Badge>
+```
+
+### Outline
+
+```vue
+<Badge outline>
+  Default
+</Badge>
+
+<Badge variant="success" outline>
+  Success
+</Badge>
+
+<Badge variant="danger" outline>
+  Danger
+</Badge>
+```
+
+### Sizes
+
+```vue
+<Badge size="sm">
+  Small
+</Badge>
+
+<Badge size="md">
+  Medium
+</Badge>
+
+<Badge size="lg">
+  Large
+</Badge>
+```
+
+## Props
+
+| Prop    | Type                                                                       | Default     | Description                              |
+| ------- | -------------------------------------------------------------------------- | ----------- | ---------------------------------------- |
+| variant | `"primary" \| "secondary" \| "success" \| "warning" \| "danger" \| "info"` | `"primary"` | Semantic color of the badge              |
+| size    | `"sm" \| "md" \| "lg"`                                                     | `"md"`      | Badge size                               |
+| outline | `boolean`                                                                  | `false`     | Displays the badge with an outline style |
+
+### Slots
+
+| Slot    | Description   |
+| ------- | ------------- |
+| default | Badge content |
+
+</details>
+
+---
