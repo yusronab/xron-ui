@@ -676,3 +676,93 @@ Inherited HTML attributes such as `disabled`, `name`, and `id` are also supporte
 </details>
 
 ---
+
+<details>
+
+<summary>
+
+# Switch
+
+</summary>
+
+Switch allows users to toggle a boolean value on or off. It supports multiple sizes, disabled and error states, and integrates seamlessly with `FormControl`.
+
+## Example
+
+### Basic
+
+```vue
+<Switch v-model="enabled">
+  Enable notifications
+</Switch>
+```
+
+### Sizes
+
+```vue
+<Switch v-model="small" size="sm">
+  Small
+</Switch>
+
+<Switch v-model="medium" size="md">
+  Medium
+</Switch>
+
+<Switch v-model="large" size="lg">
+  Large
+</Switch>
+```
+
+### Disabled
+
+```vue
+<Switch v-model="enabled" disabled>
+  Disabled
+</Switch>
+```
+
+### With FormControl
+
+```vue
+<FormControl
+  label="Notification Settings"
+  helperText="Manage your notification preferences."
+>
+  <Switch v-model="enabled">
+    Email Notifications
+  </Switch>
+</FormControl>
+```
+
+### Error
+
+```vue
+<FormControl label="Terms" error="You must enable this option.">
+  <Switch
+    v-model="accepted"
+    error
+  >
+    Accept Terms
+  </Switch>
+</FormControl>
+```
+
+## Props
+
+| Prop       | Type                   | Default | Description              |
+| ---------- | ---------------------- | ------- | ------------------------ |
+| modelValue | `boolean`              | `false` | Current switch state     |
+| size       | `"sm" \| "md" \| "lg"` | `"md"`  | Switch size              |
+| error      | `boolean`              | `false` | Displays the error state |
+
+All native HTML input attributes such as `disabled`, `name`, `id`, and `required` are also supported.
+
+## Slots
+
+| Slot    | Description          |
+| ------- | -------------------- |
+| default | Switch label content |
+
+</details>
+
+---

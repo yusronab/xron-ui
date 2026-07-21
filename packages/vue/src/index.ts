@@ -11,8 +11,9 @@ export * from "./components/Input";
 export * from "./components/InputFile";
 export * from "./components/InputPassword";
 
-export * from "./components/Radio";
-
 export * from "./components/Label";
 
+export * from "./components/Radio";
+
 export * from "./components/Spinner";
+export * from "./components/Switch";
