@@ -322,3 +322,83 @@ In addition to the props above, the component supports all native HTML input att
 </details>
 
 ---
+
+<details>
+
+<summary>
+
+# InputFile
+
+</summary>
+
+InputFile allows users to select one or more files from their device. It supports drag and drop, image previews, validation, multiple selection, and customizable appearance.
+
+## Example
+
+### Basic
+
+```vue
+<InputFile v-model="file" />
+```
+
+### Multiple Files
+
+```vue
+<InputFile v-model="files" multiple />
+```
+
+### Image Preview
+
+```vue
+<InputFile v-model="image" preview accept="image/*" />
+```
+
+### Rounded
+
+```vue
+<InputFile v-model="file" rounded />
+```
+
+## Props
+
+| Prop         | Type                     | Default            | Description                                |
+| ------------ | ------------------------ | ------------------ | ------------------------------------------ |
+| modelValue   | `File \| File[] \| null` | `null`             | Selected file(s) used with `v-model`       |
+| placeholder  | `string`                 | `"Choose file..."` | Placeholder shown when no file is selected |
+| size         | `"sm" \| "md" \| "lg"`   | `"md"`             | Input size                                 |
+| rounded      | `boolean`                | `false`            | Displays a fully rounded input             |
+| error        | `boolean`                | `false`            | Displays the input in an error state       |
+| preview      | `boolean`                | `false`            | Shows image previews                       |
+| previewShape | `"square" \| "circle"`   | `"square"`         | Shape of image previews                    |
+| previewSize  | `number`                 | `120`              | Width and height of image previews (px)    |
+| maxSize      | `number`                 | —                  | Maximum allowed file size in bytes         |
+| allowedTypes | `string[]`               | —                  | List of allowed MIME types                 |
+
+The component also supports all native HTML file input attributes such as:
+
+- `accept`
+- `multiple`
+- `disabled`
+- `required`
+- `capture`
+- `name`
+
+## Events
+
+| Event               | Payload                  | Description                            |
+| ------------------- | ------------------------ | -------------------------------------- |
+| `update:modelValue` | `File \| File[] \| null` | Fired when the selected file(s) change |
+| `validation-error`  | `string`                 | Fired when file validation fails       |
+
+## Slots
+
+| Slot       | Description              |
+| ---------- | ------------------------ |
+| `icon`     | Custom upload icon       |
+| `filename` | Custom file name display |
+| `clear`    | Custom clear button      |
+| `preview`  | Custom preview content   |
+
+</details>
+
+---
