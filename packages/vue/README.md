@@ -766,3 +766,73 @@ All native HTML input attributes such as `disabled`, `name`, `id`, and `required
 </details>
 
 ---
+
+<details>
+
+<summary>
+
+# Textarea
+
+</summary>
+
+Textarea allows users to enter multi-line text. It supports multiple sizes, disabled and error states, and integrates with `FormControl`.
+
+## Example
+
+### Basic
+
+```vue
+<Textarea v-model="description" placeholder="Enter description..." />
+```
+
+### Sizes
+
+```vue
+<Textarea v-model="value" size="sm" />
+
+<Textarea v-model="value" size="md" />
+
+<Textarea v-model="value" size="lg" />
+```
+
+### Disabled
+
+```vue
+<Textarea v-model="value" disabled />
+```
+
+### With FormControl
+
+```vue
+<FormControl label="Description" helperText="Maximum 500 characters.">
+  <Textarea
+    v-model="description"
+    placeholder="Write something..."
+  />
+</FormControl>
+```
+
+### Error
+
+```vue
+<FormControl label="Description" error="Description is required.">
+  <Textarea
+    v-model="description"
+    error
+  />
+</FormControl>
+```
+
+## Props
+
+| Prop       | Type                   | Default | Description              |
+| ---------- | ---------------------- | ------- | ------------------------ |
+| modelValue | `string`               | `""`    | Current textarea value   |
+| size       | `"sm" \| "md" \| "lg"` | `"md"`  | Textarea size            |
+| error      | `boolean`              | `false` | Displays the error state |
+
+All native `<textarea>` attributes such as `placeholder`, `rows`, `cols`, `disabled`, `maxlength`, `readonly`, `required`, `name`, and `id` are also supported.
+
+</details>
+
+---
