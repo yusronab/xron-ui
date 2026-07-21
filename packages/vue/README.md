@@ -589,3 +589,90 @@ FormControl groups a form field with its associated label, helper text, and erro
 </details>
 
 ---
+
+<details>
+
+<summary>
+
+# Radio
+
+</summary>
+
+Radio allows users to select a single option from a group. It must be used together with `RadioGroup`.
+
+## Example
+
+### Basic
+
+```vue
+<RadioGroup v-model="gender">
+  <Radio value="male">
+    Male
+  </Radio>
+
+  <Radio value="female">
+    Female
+  </Radio>
+</RadioGroup>
+```
+
+### With FormControl
+
+```vue
+<FormControl label="Gender">
+  <RadioGroup v-model="gender">
+    <Radio value="male">
+      Male
+    </Radio>
+
+    <Radio value="female">
+      Female
+    </Radio>
+  </RadioGroup>
+</FormControl>
+```
+
+### Disabled
+
+```vue
+<RadioGroup v-model="plan">
+  <Radio
+    value="free"
+    disabled
+  >
+    Free
+  </Radio>
+
+  <Radio
+    value="pro"
+    disabled
+  >
+    Pro
+  </Radio>
+</RadioGroup>
+```
+
+## Radio Props
+
+| Prop  | Type                          | Default | Description                           |
+| ----- | ----------------------------- | ------- | ------------------------------------- |
+| value | `string \| number \| boolean` | —       | Value represented by the radio option |
+| error | `boolean`                     | `false` | Displays the error state              |
+
+Inherited HTML attributes such as `disabled`, `name`, and `id` are also supported.
+
+## RadioGroup Props
+
+| Prop       | Type                          | Default | Description    |
+| ---------- | ----------------------------- | ------- | -------------- |
+| modelValue | `string \| number \| boolean` | —       | Selected value |
+
+## Slots
+
+| Slot    | Description         |
+| ------- | ------------------- |
+| default | Radio label content |
+
+</details>
+
+---
