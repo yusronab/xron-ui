@@ -223,3 +223,47 @@ Badges are used to display status, labels, categories, or short pieces of inform
 </details>
 
 ---
+
+<details>
+
+<summary>
+
+# HelperText
+
+</summary>
+
+Helper text provides additional guidance, hints, or validation messages for form controls. It supports both default and error states.
+
+## Example
+
+### Default
+
+```vue
+<HelperText>
+  We'll never share your email.
+</HelperText>
+```
+
+### Error
+
+```vue
+<HelperText error>
+  Email is required.
+</HelperText>
+```
+
+## Props
+
+| Prop  | Type      | Default | Description                          |
+| ----- | --------- | ------- | ------------------------------------ |
+| error | `boolean` | `false` | Displays the helper text as an error |
+
+### Slots
+
+| Slot    | Description         |
+| ------- | ------------------- |
+| default | Helper text content |
+
+</details>
+
+---
