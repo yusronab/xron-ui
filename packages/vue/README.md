@@ -267,3 +267,58 @@ Helper text provides additional guidance, hints, or validation messages for form
 </details>
 
 ---
+
+<details>
+
+<summary>
+
+# Input
+
+</summary>
+
+Inputs allow users to enter and edit text. They support multiple sizes, rounded style, error state, and all native HTML input attributes.
+
+## Example
+
+### Basic
+
+```vue
+<Input v-model="name" placeholder="Your name" />
+```
+
+### Rounded
+
+```vue
+<Input v-model="search" rounded placeholder="Search..." />
+```
+
+### Error
+
+```vue
+<Input v-model="email" error placeholder="Email" />
+```
+
+### Sizes
+
+```vue
+<Input size="sm" placeholder="Small" />
+
+<Input size="md" placeholder="Medium" />
+
+<Input size="lg" placeholder="Large" />
+```
+
+## Props
+
+| Prop       | Type                   | Default | Description                          |
+| ---------- | ---------------------- | ------- | ------------------------------------ |
+| modelValue | `string \| number`     | `""`    | Input value used by `v-model`        |
+| size       | `"sm" \| "md" \| "lg"` | `"md"`  | Input size                           |
+| rounded    | `boolean`              | `false` | Displays a fully rounded input       |
+| error      | `boolean`              | `false` | Displays the input in an error state |
+
+In addition to the props above, the component supports all native HTML input attributes such as `id`, `type`, `placeholder`, `disabled`, `readonly`, `maxlength`, `autocomplete`, and more.
+
+</details>
+
+---
