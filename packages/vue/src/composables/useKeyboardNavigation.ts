@@ -83,6 +83,10 @@ export function useKeyboardNavigation({
     }
   }
 
+  function setActiveIndex(value: number) {
+    activeIndex.value = value;
+  }
+
   watch(open, (value) => {
     if (!value) {
       activeIndex.value = -1;
@@ -96,5 +100,6 @@ export function useKeyboardNavigation({
     activeIndex,
     optionRefs,
     handleKeyDown,
+    setActiveIndex,
   };
 }

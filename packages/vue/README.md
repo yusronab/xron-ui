@@ -1050,3 +1050,117 @@ Select allows users to choose a single option from a dropdown list. It supports 
 </details>
 
 ---
+
+<details>
+
+<summary>
+
+# Autocomplete
+
+</summary>
+
+Autocomplete allows users to search and select a single option from a dropdown list. It supports local filtering, asynchronous search, loading state, clearable input, keyboard navigation, custom option rendering, and integrates with FormControl.
+
+## Example
+
+### Basic
+
+```tsx
+<Autocomplete
+  v-model="fruit"
+  :options="options"
+  labelKey="name"
+  valueKey="id"
+/>
+```
+
+### Async Search
+
+```tsx
+<Autocomplete
+  v-model="user"
+  :options="users"
+  labelKey="name"
+  valueKey="id"
+  @search="handleSearch"
+/>
+```
+
+### Clearable
+
+```tsx
+<Autocomplete
+  v-model="fruit"
+  :options="options"
+  labelKey="name"
+  valueKey="id"
+  clearable
+/>
+```
+
+### Loading
+
+```vue
+<Autocomplete loading :options="[]" labelKey="name" valueKey="id" />
+```
+
+### Custom Option
+
+```vue
+<Autocomplete v-model="fruit" :options="options" labelKey="name" valueKey="id">
+  <template #option="{ option }">
+    🍎 {{ option.name }}
+  </template>
+</Autocomplete>
+```
+
+### With FormControl
+
+```vue
+<FormControl label="Country" helperText="Search your country.">
+  <Autocomplete
+    v-model="country"
+    :options="countries"
+    labelKey="name"
+    valueKey="id"
+  />
+</FormControl>
+```
+
+## Props
+
+| Prop        | Type                   | Default        | Description                     |
+| ----------- | ---------------------- | -------------- | ------------------------------- |
+| modelValue  | `string \| number`     | -              | Selected value                  |
+| options     | `Option[]`             | **required**   | Options list                    |
+| labelKey    | `string`               | **required**   | Object key used as label        |
+| valueKey    | `string`               | **required**   | Object key used as value        |
+| placeholder | `string`               | `""`           | Placeholder text                |
+| loading     | `boolean`              | `false`        | Displays loading state          |
+| loadingText | `string`               | `"Loading..."` | Loading text                    |
+| emptyText   | `string`               | `"No data"`    | Empty state text                |
+| clearable   | `boolean`              | `false`        | Allows clearing current value   |
+| debounce    | `number`               | `300`          | Search debounce in milliseconds |
+| size        | `"sm" \| "md" \| "lg"` | `"md"`         | Component size                  |
+| rounded     | `boolean`              | `false`        | Fully rounded style             |
+| error       | `boolean`              | `false`        | Error state                     |
+| disabled    | `boolean`              | `false`        | Disabled state                  |
+
+### Events
+
+| Event             | Description                                       |
+| ----------------- | ------------------------------------------------- |
+| update:modelValue | Fired when selected value changes                 |
+| change            | Fired when option changes                         |
+| search            | Fired after debounce whenever the keyword changes |
+
+### Slots
+
+| Slot   | Description            |
+| ------ | ---------------------- |
+| option | Custom option renderer |
+| clear  | Custom clear icon      |
+
+</details>
+
+---
