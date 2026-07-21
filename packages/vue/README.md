@@ -402,3 +402,73 @@ The component also supports all native HTML file input attributes such as:
 </details>
 
 ---
+
+<details>
+
+<summary>
+
+# InputPassword
+
+</summary>
+
+InputPassword allows users to securely enter passwords with a built-in visibility toggle. It supports multiple sizes, rounded style, error state, and all native HTML password input attributes.
+
+## Example
+
+### Basic
+
+```vue
+<InputPassword v-model="password" placeholder="Password" />
+```
+
+### Rounded
+
+```vue
+<InputPassword v-model="password" rounded />
+```
+
+### Error
+
+```vue
+<InputPassword v-model="password" error />
+```
+
+### Sizes
+
+```vue
+<InputPassword v-model="password" size="sm" />
+
+<InputPassword v-model="password" size="md" />
+
+<InputPassword v-model="password" size="lg" />
+```
+
+## Props
+
+| Prop       | Type                   | Default | Description                          |
+| ---------- | ---------------------- | ------- | ------------------------------------ |
+| modelValue | `string`               | `""`    | Password value used by `v-model`     |
+| size       | `"sm" \| "md" \| "lg"` | `"md"`  | Input size                           |
+| rounded    | `boolean`              | `false` | Displays a fully rounded input       |
+| error      | `boolean`              | `false` | Displays the input in an error state |
+
+The component also supports all native HTML input attributes such as:
+
+- `autocomplete`
+- `placeholder`
+- `disabled`
+- `readonly`
+- `required`
+- `maxlength`
+- `minlength`
+- `name`
+
+## Events
+
+| Event               | Payload  | Description                           |
+| ------------------- | -------- | ------------------------------------- |
+| `update:modelValue` | `string` | Fired when the password value changes |
+
+</details>
+
+---

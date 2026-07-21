@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref, useAttrs, useId, watch } from "vue";
+import { computed, onBeforeUnmount, ref, watch } from "vue";
 
 import { CloseIcon, UploadIcon } from "../../icons";
 import { cn, normalizeFiles } from "../../utils";
 import { inputVariants } from "../../variants/input";
 
 import type { InputFileProps } from "./InputFile.types";
+import { useInput } from "../../composables/useInput";
 
 defineOptions({
   name: "InputFile",
@@ -28,17 +29,13 @@ const emit = defineEmits<{
   "validation-error": [string];
 }>();
 
-const attrs = useAttrs();
+const { attrs, id, disabled } = useInput();
 
 const inputRef = ref<HTMLInputElement>();
 
 const dragging = ref(false);
 
 const previewUrls = ref<string[]>([]);
-
-const inputId = computed(() => (attrs.id as string | undefined) ?? useId());
-
-const disabled = computed(() => Boolean(attrs.disabled));
 
 const files = computed<File[]>(() => {
   if (!props.modelValue) {
@@ -182,7 +179,7 @@ const classes = computed(() =>
 <template>
   <div class="w-full">
     <input
-      :id="inputId"
+      :id="id"
       ref="inputRef"
       v-bind="attrs"
       type="file"

@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { computed, useAttrs, useId } from "vue";
+import { computed } from "vue";
 
 import { cn } from "../../utils";
 import { inputVariants } from "../../variants/input";
 
 import type { InputProps } from "./Input.types";
+import { useInput } from "../../composables/useInput";
 
 defineOptions({
   name: "Input",
@@ -22,11 +23,7 @@ const emit = defineEmits<{
   "update:modelValue": [string];
 }>();
 
-const attrs = useAttrs();
-
-const generatedId = useId();
-
-const inputId = computed(() => (attrs.id as string | undefined) ?? generatedId);
+const { attrs, id, disabled } = useInput();
 
 const classes = computed(() =>
   cn(
@@ -48,8 +45,9 @@ function onInput(event: Event) {
   <!-- NOSONAR -->
   <input
     v-bind="attrs"
-    :id="inputId"
+    :id="id"
     :value="modelValue"
+    :disabled="disabled"
     :class="classes"
     @input="onInput"
   />
