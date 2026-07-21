@@ -309,6 +309,18 @@ Inputs allow users to enter and edit text. They support multiple sizes, rounded 
 <Input size="lg" placeholder="Large" />
 ```
 
+### With FormControl
+
+```vue
+<FormControl label="Email" helperText="We'll never share your email address.">
+  <Input
+    v-model="email"
+    type="email"
+    placeholder="Enter your email"
+  />
+</FormControl>
+```
+
 ## Props
 
 | Prop       | Type                   | Default | Description                          |
@@ -832,6 +844,101 @@ Textarea allows users to enter multi-line text. It supports multiple sizes, disa
 | error      | `boolean`              | `false` | Displays the error state |
 
 All native `<textarea>` attributes such as `placeholder`, `rows`, `cols`, `disabled`, `maxlength`, `readonly`, `required`, `name`, and `id` are also supported.
+
+</details>
+
+---
+
+<details>
+
+<summary>
+
+# Checkbox
+
+</summary>
+
+Checkbox allows users to select one or more independent options. It supports checked, indeterminate, disabled, and error states, and integrates with `FormControl`.
+
+## Example
+
+### Basic
+
+```vue
+<Checkbox v-model="checked">
+  Accept terms and conditions
+</Checkbox>
+```
+
+### Checked
+
+```vue
+<Checkbox v-model="checked">
+  Receive newsletter
+</Checkbox>
+```
+
+### Indeterminate
+
+```vue
+<Checkbox v-model="checked" indeterminate>
+  Select all
+</Checkbox>
+```
+
+### Disabled
+
+```vue
+<Checkbox v-model="checked" disabled>
+  Disabled option
+</Checkbox>
+```
+
+### With FormControl
+
+```vue
+<FormControl label="Permissions" helperText="Select one or more permissions.">
+  <Checkbox v-model="read">
+    Read
+  </Checkbox>
+
+  <Checkbox v-model="write">
+    Write
+  </Checkbox>
+
+  <Checkbox v-model="remove">
+    Delete
+  </Checkbox>
+</FormControl>
+```
+
+### Error
+
+```vue
+<FormControl label="Agreement" error="You must accept the agreement.">
+  <Checkbox
+    v-model="accepted"
+    error
+  >
+    I agree to the terms and conditions.
+  </Checkbox>
+</FormControl>
+```
+
+## Props
+
+| Prop          | Type      | Default | Description                      |
+| ------------- | --------- | ------- | -------------------------------- |
+| modelValue    | `boolean` | `false` | Current checked state            |
+| error         | `boolean` | `false` | Displays the error state         |
+| indeterminate | `boolean` | `false` | Displays the indeterminate state |
+
+All native checkbox attributes such as `disabled`, `name`, `id`, `required`, and `value` are also supported.
+
+## Slots
+
+| Slot    | Description    |
+| ------- | -------------- |
+| default | Checkbox label |
 
 </details>
 

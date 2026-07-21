@@ -1,7 +1,7 @@
 import { ref, watch } from "vue";
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 
-import { Input } from "@xron-ui/vue";
+import { FormControl, Input } from "@xron-ui/vue";
 
 const meta = {
   title: "Components/Input",
@@ -185,4 +185,34 @@ export const Disabled: Story = {
     disabled: true,
     placeholder: "Disabled",
   },
+};
+
+export const WithFormControl: Story = {
+  render: () => ({
+    components: {
+      FormControl,
+      Input,
+    },
+
+    setup() {
+      const email = ref("");
+
+      return {
+        email,
+      };
+    },
+
+    template: `
+      <FormControl
+        label="Email"
+        helperText="We'll never share your email address."
+      >
+        <Input
+          v-model="email"
+          type="email"
+          placeholder="Enter your email"
+        />
+      </FormControl>
+    `,
+  }),
 };

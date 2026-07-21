@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, watch, useAttrs } from "vue";
+import { ref, watch } from "vue";
 
 import { cn } from "../../utils";
+import { useInput } from "../../composables/useInput";
 
 import CheckboxIndicator from "./CheckboxIndicator.vue";
 
@@ -14,7 +15,6 @@ defineOptions({
 
 const props = withDefaults(defineProps<CheckboxProps>(), {
   modelValue: false,
-  disabled: false,
   error: false,
   indeterminate: false,
 });
@@ -23,7 +23,7 @@ const emit = defineEmits<{
   "update:modelValue": [boolean];
 }>();
 
-const attrs = useAttrs();
+const { attrs, id, disabled } = useInput();
 
 const inputRef = ref<HTMLInputElement>();
 
@@ -45,7 +45,7 @@ function onChange(event: Event) {
 </script>
 
 <template>
-  <label
+  <div
     :class="
       cn(
         'inline-flex items-center gap-3',
@@ -55,7 +55,9 @@ function onChange(event: Event) {
     "
   >
     <input
+      :id="id"
       ref="inputRef"
+      v-bind="attrs"
       type="checkbox"
       class="peer sr-only"
       :checked="modelValue"
@@ -70,12 +72,10 @@ function onChange(event: Event) {
     />
 
     <span
-      v-if="label || $slots.default"
+      v-if="$slots.default"
       class="text-sm text-gray-900 dark:text-gray-100"
     >
-      <slot>
-        {{ label }}
-      </slot>
+      <slot />
     </span>
-  </label>
+  </div>
 </template>

@@ -1,35 +1,28 @@
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 
-import { Checkbox } from "@xron-ui/vue";
+import { Checkbox, FormControl } from "@xron-ui/vue";
 
 const meta = {
   title: "Components/Checkbox",
   component: Checkbox,
 
   args: {
-    label: "Remember me",
-    modelValue: false,
+    error: false,
+    indeterminate: false,
+    disabled: false,
   },
 
   argTypes: {
-    modelValue: {
-      control: "boolean",
-    },
-
-    label: {
-      control: "text",
-    },
-
-    disabled: {
-      control: "boolean",
-    },
-
     error: {
       control: "boolean",
     },
 
     indeterminate: {
+      control: "boolean",
+    },
+
+    disabled: {
       control: "boolean",
     },
   },
@@ -40,14 +33,7 @@ const meta = {
     },
 
     setup() {
-      const checked = ref(args.modelValue);
-
-      watch(
-        () => args.modelValue,
-        (value) => {
-          checked.value = value;
-        },
-      );
+      const checked = ref(false);
 
       return {
         args,
@@ -57,10 +43,10 @@ const meta = {
 
     template: `
       <Checkbox
-        v-bind="args"
         v-model="checked"
+        v-bind="args"
       >
-        {{ args.label }}
+        Accept terms and conditions
       </Checkbox>
     `,
   }),
@@ -76,93 +62,143 @@ export const Showcase: Story = {
   render: () => ({
     components: {
       Checkbox,
+      FormControl,
     },
 
     setup() {
-      const checked = ref(true);
-      const unchecked = ref(false);
-      const disabled = ref(true);
-      const error = ref(false);
-      const indeterminate = ref(false);
+      const read = ref(true);
+      const write = ref(false);
+      const remove = ref(false);
 
       return {
-        checked,
-        unchecked,
-        disabled,
-        error,
-        indeterminate,
+        read,
+        write,
+        remove,
       };
     },
 
     template: `
-      <div class="flex flex-col gap-4">
+      <FormControl
+        label="Permissions"
+        helper-text="Select one or more permissions."
+      >
+        <div class="flex flex-col gap-3">
+          <Checkbox v-model="read">
+            Read
+          </Checkbox>
 
-        <Checkbox v-model="unchecked">
-          Unchecked
-        </Checkbox>
+          <Checkbox v-model="write">
+            Write
+          </Checkbox>
 
-        <Checkbox v-model="checked">
-          Checked
-        </Checkbox>
-
-        <Checkbox
-          v-model="indeterminate"
-          indeterminate
-        >
-          Indeterminate
-        </Checkbox>
-
-        <Checkbox
-          v-model="disabled"
-          disabled
-        >
-          Disabled
-        </Checkbox>
-
-        <Checkbox
-          v-model="error"
-          error
-        >
-          Error
-        </Checkbox>
-
-      </div>
+          <Checkbox v-model="remove">
+            Delete
+          </Checkbox>
+        </div>
+      </FormControl>
     `,
   }),
 };
 
 export const Checked: Story = {
-  args: {
-    modelValue: true,
-    label: "Checked",
-  },
-};
+  render: () => ({
+    components: {
+      Checkbox,
+    },
 
-export const Unchecked: Story = {
-  args: {
-    modelValue: false,
-    label: "Unchecked",
-  },
+    setup() {
+      const checked = ref(true);
+
+      return {
+        checked,
+      };
+    },
+
+    template: `
+      <Checkbox v-model="checked">
+        Checked
+      </Checkbox>
+    `,
+  }),
 };
 
 export const Indeterminate: Story = {
-  args: {
-    modelValue: false,
-    indeterminate: true,
-    label: "Indeterminate",
-  },
+  render: () => ({
+    components: {
+      Checkbox,
+    },
+
+    setup() {
+      const checked = ref(false);
+
+      return {
+        checked,
+      };
+    },
+
+    template: `
+      <Checkbox
+        v-model="checked"
+        indeterminate
+      >
+        Indeterminate
+      </Checkbox>
+    `,
+  }),
 };
 
 export const Disabled: Story = {
-  args: {
-    disabled: true,
-    label: "Disabled",
-  },
+  render: () => ({
+    components: {
+      Checkbox,
+    },
+
+    setup() {
+      const checked = ref(true);
+
+      return {
+        checked,
+      };
+    },
+
+    template: `
+      <Checkbox
+        v-model="checked"
+        disabled
+      >
+        Disabled
+      </Checkbox>
+    `,
+  }),
 };
 
 export const ErrorVariant: Story = {
-  args: {
-    error: true,
-    label: "Error",
-  },
+  render: () => ({
+    components: {
+      Checkbox,
+      FormControl,
+    },
+
+    setup() {
+      const checked = ref(false);
+
+      return {
+        checked,
+      };
+    },
+
+    template: `
+      <FormControl
+        label="Agreement"
+        error="You must accept the agreement."
+      >
+        <Checkbox
+          v-model="checked"
+          error
+        >
+          I agree to the terms and conditions.
+        </Checkbox>
+      </FormControl>
+    `,
+  }),
 };

@@ -42,7 +42,6 @@ function onInput(event: Event) {
 </script>
 
 <template>
-  <!-- NOSONAR -->
   <input
     v-bind="attrs"
     :id="id"
