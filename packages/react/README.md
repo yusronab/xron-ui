@@ -64,6 +64,7 @@ UI
 - [Modal](#modal)
 - [Skeleton](#skeleton)
 - [Spinner](#spinner)
+- [Text](#text)
 - [Tooltip](#tooltip)
 
 Table
@@ -1891,6 +1892,119 @@ Skeleton displays a placeholder while content is loading. It supports configurab
 | lines     | `number`                                   | `1`       | Number of skeleton lines |
 | radius    | `"none" \| "sm" \| "md" \| "lg" \| "full"` | `"md"`    | Border radius            |
 | animation | `"none" \| "pulse" \| "wave"`              | `"pulse"` | Animation style          |
+
+</details>
+
+---
+
+<details>
+
+<summary>
+
+# Text
+
+</summary>
+
+Text renders semantic typography elements with consistent styling. It supports headings, paragraphs, inline text, alignment, truncation, emphasis, and loading states using Skeleton.
+
+## Example
+
+### Paragraph
+
+```tsx
+<Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
+```
+
+### Heading
+
+```tsx
+<Text as="h1">
+  Dashboard
+</Text>
+
+<Text as="h2">
+  Users
+</Text>
+
+<Text as="h3">
+  Analytics
+</Text>
+```
+
+### Inline Text
+
+```tsx
+<Text as="span">
+  Active
+</Text>
+
+<Text as="small">
+  Updated 5 minutes ago
+</Text>
+```
+
+### Alignment
+
+```tsx
+<Text align="center">
+  Centered text
+</Text>
+
+<Text align="right">
+  Right aligned
+</Text>
+```
+
+### Truncate
+
+```tsx
+<Text truncate>
+  This is a very long text that will be truncated when it exceeds the available
+  width.
+</Text>
+```
+
+### Italic & Underline
+
+```tsx
+<Text italic>
+  Italic text
+</Text>
+
+<Text underline>
+  Underlined text
+</Text>
+```
+
+### Loading
+
+```tsx
+<Text loading />
+
+<Text
+  loading
+  skeletonLines={3}
+/>
+
+<Text
+  as="h2"
+  loading
+  skeletonWidth={240}
+/>
+```
+
+## Props
+
+| Prop          | Type                                                                                | Default  | Description                      |
+| ------------- | ----------------------------------------------------------------------------------- | -------- | -------------------------------- |
+| as            | `"h1" \| "h2" \| "h3" \| "h4" \| "h5" \| "h6" \| "p" \| "span" \| "div" \| "small"` | `"p"`    | HTML element to render           |
+| align         | `"left" \| "center" \| "right" \| "justify"`                                        | `"left"` | Text alignment                   |
+| truncate      | `boolean`                                                                           | `false`  | Truncate overflowing text        |
+| italic        | `boolean`                                                                           | `false`  | Italic text                      |
+| underline     | `boolean`                                                                           | `false`  | Underline text                   |
+| loading       | `boolean`                                                                           | `false`  | Display Skeleton instead of text |
+| skeletonLines | `number`                                                                            | `1`      | Number of skeleton lines         |
+| skeletonWidth | `number \| string`                                                                  | `"100%"` | Skeleton width                   |
 
 </details>
 

@@ -29,5 +29,6 @@ export * from "./components/Spinner";
 export * from "./components/Switch";
 
 export * from "./components/Table";
+export * from "./components/Text";
 export * from "./components/Textarea";
 export * from "./components/Tooltip";
