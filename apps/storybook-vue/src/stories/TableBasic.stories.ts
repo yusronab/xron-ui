@@ -43,7 +43,7 @@ const columns = [
 ];
 
 const meta = {
-  title: "Components/Table",
+  title: "UI/Table Example",
 
   component: Table,
 
