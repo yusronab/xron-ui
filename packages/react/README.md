@@ -62,6 +62,7 @@ UI
 - [Badge](#badge)
 - [Button](#button)
 - [Modal](#modal)
+- [Skeleton](#skeleton)
 - [Spinner](#spinner)
 - [Tooltip](#tooltip)
 
@@ -1828,6 +1829,68 @@ FormControl groups related form elements with an optional label, helper text, an
 | required   | `boolean`   | `false`        | Displays required indicator         |
 | error      | `boolean`   | `false`        | Displays helper text in error state |
 | children   | `ReactNode` | **required**   | Form control content                |
+
+</details>
+
+---
+
+<details>
+
+<summary>
+
+# Skeleton
+
+</summary>
+
+Skeleton displays a placeholder while content is loading. It supports configurable dimensions, multiple lines, border radius variants, and different animation styles.
+
+## Example
+
+### Basic
+
+```tsx
+<Skeleton />
+```
+
+### Custom Size
+
+```tsx
+<Skeleton width={200} height={24} />
+```
+
+### Multiple Lines
+
+```tsx
+<Skeleton lines={3} height={16} />
+```
+
+### Rounded
+
+```tsx
+<Skeleton width={120} height={40} radius="full" />
+```
+
+### Wave Animation
+
+```tsx
+<Skeleton animation="wave" />
+```
+
+### No Animation
+
+```tsx
+<Skeleton animation="none" />
+```
+
+## Props
+
+| Prop      | Type                                       | Default   | Description              |
+| --------- | ------------------------------------------ | --------- | ------------------------ |
+| width     | `number \| string`                         | `"100%"`  | Skeleton width           |
+| height    | `number \| string`                         | `16`      | Skeleton height          |
+| lines     | `number`                                   | `1`       | Number of skeleton lines |
+| radius    | `"none" \| "sm" \| "md" \| "lg" \| "full"` | `"md"`    | Border radius            |
+| animation | `"none" \| "pulse" \| "wave"`              | `"pulse"` | Animation style          |
 
 </details>
 

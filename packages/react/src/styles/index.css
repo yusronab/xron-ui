@@ -1,3 +1,37 @@
 @import "tailwindcss";
 @import "./tokens.css";
 @source "../**/*.{ts,tsx}";
+
+@keyframes xron-skeleton-wave {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.xron-skeleton-wave::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  transform: translateX(-100%);
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(255 255 255 / 0.45),
+    transparent
+  );
+
+  animation: xron-skeleton-wave 1.5s infinite;
+}
+
+.dark .xron-skeleton-wave::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(255 255 255 / 0.08),
+    transparent
+  );
+}

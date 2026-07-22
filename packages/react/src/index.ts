@@ -24,6 +24,7 @@ export * from "./components/Pagination";
 export * from "./components/Radio";
 
 export * from "./components/Select";
+export * from "./components/Skeleton";
 export * from "./components/Spinner";
 export * from "./components/Switch";
 
