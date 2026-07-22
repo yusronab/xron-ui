@@ -1441,3 +1441,150 @@ Pagination allows users to navigate through multiple pages of data. It supports 
 </details>
 
 ---
+
+<details>
+
+<summary>
+
+# Table
+
+</summary>
+
+Table displays structured data with support for sorting, row selection, striped rows, custom header and cell slots, and empty states.
+
+## Example
+
+### Basic
+
+```vue
+<Table :columns="columns" :data="users" rowKey="id" />
+```
+
+### Sortable Columns
+
+```tsx
+<Table
+  :columns="columns"
+  :data="users"
+  rowKey="id"
+  :sorting="sorting"
+  @sort="handleSort"
+/>
+```
+
+### Row Selection
+
+```tsx
+<Table
+  :columns="columns"
+  :data="users"
+  rowKey="id"
+  :selection="selection"
+  @selection-change="handleSelection"
+/>
+```
+
+### Custom Cell
+
+```vue
+<Table :columns="columns" :data="users" rowKey="id">
+  <template #email="{ value }">
+    <a :href="`mailto:${value}`">
+      {{ value }}
+    </a>
+  </template>
+
+  <template #status="{ value }">
+    <Badge>
+      {{ value }}
+    </Badge>
+  </template>
+</Table>
+```
+
+### Custom Header
+
+```vue
+<Table :columns="columns" :data="users" rowKey="id">
+  <template #header-email>
+    📧 Email
+  </template>
+
+  <template #header-status>
+    Status
+  </template>
+</Table>
+```
+
+### Empty State
+
+```vue
+<Table :columns="columns" :data="[]" rowKey="id">
+  <template #empty>
+    No users found.
+  </template>
+</Table>
+```
+
+### With Pagination
+
+```vue
+<script setup lang="ts">
+import { computed, ref } from "vue";
+
+const page = ref(1);
+const pageSize = ref(10);
+
+const paginatedData = computed(() => {
+  const start = (page.value - 1) * pageSize.value;
+
+  return users.slice(start, start + pageSize.value);
+});
+</script>
+
+<Table :columns="columns" :data="paginatedData" rowKey="id" />
+
+<div class="mt-4 flex items-center justify-between">
+  <PageSize
+    v-model="pageSize"
+  />
+
+  <Pagination
+    :page="page"
+    :page-size="pageSize"
+    :total="users.length"
+    @page-change="page = $event"
+  />
+</div>
+```
+
+## Props
+
+| Prop      | Type             | Default      | Description                 |
+| --------- | ---------------- | ------------ | --------------------------- |
+| columns   | `TableColumn[]`  | **required** | Table column definitions    |
+| data      | `TableRecord[]`  | **required** | Table data                  |
+| rowKey    | `string`         | **required** | Unique key field            |
+| striped   | `boolean`        | `true`       | Alternate row background    |
+| sorting   | `TableSorting`   | -            | Sorting configuration       |
+| selection | `TableSelection` | -            | Row selection configuration |
+| emptyText | `string`         | `"No data"`  | Empty state text            |
+
+### Events
+
+| Event            | Description                     |
+| ---------------- | ------------------------------- |
+| sort             | Fired when sorting changes      |
+| selection-change | Fired when selected rows change |
+
+### Slots
+
+| Slot                   | Description          |
+| ---------------------- | -------------------- |
+| empty                  | Custom empty state   |
+| `#header-{column.key}` | Custom column header |
+| `#{column.key}`        | Custom cell renderer |
+
+</details>
+
+---
