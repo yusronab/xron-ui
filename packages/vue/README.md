@@ -1164,3 +1164,107 @@ Autocomplete allows users to search and select a single option from a dropdown l
 </details>
 
 ---
+
+<details>
+
+<summary>
+
+# MultiSelect
+
+</summary>
+
+MultiSelect allows users to select multiple options from a dropdown list. It supports keyboard navigation, Select All, loading state, custom option rendering, custom selected value rendering, and integrates with FormControl.
+
+## Example
+
+### Basic
+
+```tsx
+<MultiSelect
+  v-model="fruits"
+  :options="options"
+  labelKey="name"
+  valueKey="id"
+/>
+```
+
+### Loading
+
+```vue
+<MultiSelect loading :options="[]" labelKey="name" valueKey="id" />
+```
+
+### Custom Option
+
+```vue
+<MultiSelect v-model="fruits" :options="options" labelKey="name" valueKey="id">
+  <template #option="{ option, selected, active }">
+    <div
+      :style="{
+        fontWeight: selected ? '600' : '400',
+        opacity: active ? 1 : 0.75,
+      }"
+    >
+      🍎 {{ option.name }}
+    </div>
+  </template>
+</MultiSelect>
+```
+
+### Custom Selected Value
+
+```vue
+<MultiSelect v-model="fruits" :options="options" labelKey="name" valueKey="id">
+  <template #value="{ options }">
+    {{ options.length }} selected
+  </template>
+</MultiSelect>
+```
+
+### With FormControl
+
+```vue
+<FormControl label="Favorite Fruits" helperText="Select one or more fruits.">
+  <MultiSelect
+    v-model="fruits"
+    :options="options"
+    labelKey="name"
+    valueKey="id"
+  />
+</FormControl>
+```
+
+## Props
+
+| Prop        | Type                   | Default        | Description              |
+| ----------- | ---------------------- | -------------- | ------------------------ |
+| modelValue  | `(string \| number)[]` | `[]`           | Selected values          |
+| options     | `Option[]`             | **required**   | Options list             |
+| labelKey    | `string`               | **required**   | Object key used as label |
+| valueKey    | `string`               | **required**   | Object key used as value |
+| placeholder | `string`               | `"Select..."`  | Placeholder text         |
+| loading     | `boolean`              | `false`        | Displays loading state   |
+| loadingText | `string`               | `"Loading..."` | Loading text             |
+| emptyText   | `string`               | `"No data"`    | Empty state text         |
+| size        | `"sm" \| "md" \| "lg"` | `"md"`         | Component size           |
+| rounded     | `boolean`              | `false`        | Fully rounded style      |
+| error       | `boolean`              | `false`        | Error state              |
+| disabled    | `boolean`              | `false`        | Disabled state           |
+
+### Events
+
+| Event             | Description                       |
+| ----------------- | --------------------------------- |
+| update:modelValue | Fired when selected values change |
+| change            | Fired when selected values change |
+
+### Slots
+
+| Slot   | Description                    |
+| ------ | ------------------------------ |
+| option | Custom option renderer         |
+| value  | Custom selected value renderer |
+
+</details>
+
+---
