@@ -2,13 +2,7 @@ import { computed, ref } from "vue";
 
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 
-import {
-  type TableSorting,
-  Badge,
-  PageSize,
-  Pagination,
-  Table,
-} from "@xron-ui/vue";
+import { type TableSorting, Badge, Table } from "@xron-ui/vue";
 
 const users = [
   {
@@ -239,91 +233,5 @@ export const CustomEmpty: Story = {
   </template>
 </Table>
     `,
-  }),
-};
-
-export const WithPagination: Story = {
-  render: (args: Story["args"]) => ({
-    components: {
-      Table,
-      Pagination,
-      PageSize,
-    },
-
-    setup() {
-      const page = ref(1);
-      const pageSize = ref(10);
-
-      const data = computed(() => {
-        return Array.from(
-          {
-            length: 100,
-          },
-          (_, index) => ({
-            id: index + 1,
-            name: `User ${index + 1}`,
-            email: `user${index + 1}@example.com`,
-            status: index % 2 === 0 ? "Active" : "Inactive",
-          }),
-        );
-      });
-
-      const paginatedData = computed(() => {
-        const start = (page.value - 1) * pageSize.value;
-
-        return data.value.slice(start, start + pageSize.value);
-      });
-
-      const totalPages = computed(() =>
-        Math.ceil(data.value.length / pageSize.value),
-      );
-
-      function handlePageChange(value: number) {
-        page.value = value;
-      }
-
-      function handlePageSizeChange(value: number) {
-        pageSize.value = value;
-
-        if (page.value > totalPages.value) {
-          page.value = totalPages.value;
-        }
-      }
-
-      return {
-        args,
-        page,
-        pageSize,
-        data,
-        paginatedData,
-        handlePageChange,
-        handlePageSizeChange,
-      };
-    },
-
-    template: `
-<div class="space-y-4">
-  <Table
-    v-bind="args"
-    :data="paginatedData"
-  />
-
-  <div
-    class="flex items-center justify-between gap-4"
-  >
-    <PageSize
-      v-model="pageSize"
-      @change="handlePageSizeChange"
-    />
-
-    <Pagination
-      :page="page"
-      :page-size="pageSize"
-      :total="data.length"
-      @page-change="handlePageChange"
-    />
-  </div>
-</div>
-`,
   }),
 };

@@ -15,6 +15,7 @@ export * from "./components/InputPassword";
 
 export * from "./components/Label";
 
+export * from "./components/Modal";
 export * from "./components/MultiSelect";
 
 export * from "./components/PageSize";

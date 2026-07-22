@@ -1588,3 +1588,93 @@ const paginatedData = computed(() => {
 </details>
 
 ---
+
+<details>
+
+<summary>
+
+# Modal
+
+</summary>
+
+Modal displays content in a dialog above the page. It supports multiple sizes, keyboard dismissal, overlay dismissal, and integrates naturally with Vue using `v-model`.
+
+## Example
+
+### Basic
+
+```vue
+<script setup lang="ts">
+import { ref } from "vue";
+
+const open = ref(false);
+</script>
+
+<Button @click="open = true">
+  Open Modal
+</Button>
+
+<Modal v-model="open">
+  <h2 class="text-lg font-semibold">
+    Modal Title
+  </h2>
+
+  <p class="mt-2">
+    This is the modal content.
+  </p>
+</Modal>
+```
+
+### Different Sizes
+
+```vue
+<Modal v-model="open" size="sm">
+  Small modal
+</Modal>
+
+<Modal v-model="open" size="lg">
+  Large modal
+</Modal>
+```
+
+### Disable Escape Close
+
+```vue
+<Modal v-model="open" :closeOnEscape="false">
+  Cannot close with Escape.
+</Modal>
+```
+
+### Disable Overlay Close
+
+```vue
+<Modal v-model="open" :closeOnOverlayClick="false">
+  Cannot close by clicking outside.
+</Modal>
+```
+
+## Props
+
+| Prop                | Type                                     | Default | Description                  |
+| ------------------- | ---------------------------------------- | ------- | ---------------------------- |
+| modelValue          | `boolean`                                | `false` | Controls modal visibility    |
+| size                | `"sm" \| "md" \| "lg" \| "xl" \| "full"` | `"md"`  | Modal size                   |
+| closeOnEscape       | `boolean`                                | `true`  | Close when Escape is pressed |
+| closeOnOverlayClick | `boolean`                                | `true`  | Close when clicking backdrop |
+
+### Events
+
+| Event             | Description                   |
+| ----------------- | ----------------------------- |
+| update:modelValue | Fired when visibility changes |
+| close             | Fired when modal closes       |
+
+### Slots
+
+| Slot    | Description   |
+| ------- | ------------- |
+| default | Modal content |
+
+</details>
+
+---
