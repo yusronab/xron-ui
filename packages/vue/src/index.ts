@@ -17,6 +17,8 @@ export * from "./components/Label";
 
 export * from "./components/MultiSelect";
 
+export * from "./components/PageSize";
+
 export * from "./components/Radio";
 
 export * from "./components/Select";

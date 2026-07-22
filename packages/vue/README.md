@@ -1268,3 +1268,88 @@ MultiSelect allows users to select multiple options from a dropdown list. It sup
 </details>
 
 ---
+
+<details>
+
+<summary>
+
+# PageSize
+
+</summary>
+
+PageSize allows users to select the number of items displayed per page. It is built on top of the Select component and supports custom options, loading state, prefix and suffix content, and integrates well with pagination components.
+
+## Example
+
+### Basic
+
+```vue
+<PageSize v-model="pageSize" />
+```
+
+### Custom Options
+
+```tsx
+<PageSize
+  v-model="pageSize"
+  :options="[
+    { label: '5', value: 5 },
+    { label: '10', value: 10 },
+    { label: '25', value: 25 },
+    { label: '50', value: 50 },
+  ]"
+/>
+```
+
+### Prefix & Suffix
+
+```vue
+<PageSize v-model="pageSize">
+  <template #prefix>
+    Show
+  </template>
+
+  <template #suffix>
+    entries
+  </template>
+</PageSize>
+```
+
+### Loading
+
+```vue
+<PageSize loading />
+```
+
+## Props
+
+| Prop        | Type                   | Default          | Description                 |
+| ----------- | ---------------------- | ---------------- | --------------------------- |
+| modelValue  | `number`               | **required**     | Selected page size          |
+| options     | `Option[]`             | `[10,20,50,100]` | Available page size options |
+| placeholder | `string`               | `"Select..."`    | Placeholder text            |
+| loading     | `boolean`              | `false`          | Displays loading state      |
+| loadingText | `string`               | `"Loading..."`   | Loading text                |
+| emptyText   | `string`               | `"No data"`      | Empty state text            |
+| size        | `"sm" \| "md" \| "lg"` | `"md"`           | Component size              |
+| rounded     | `boolean`              | `false`          | Fully rounded style         |
+| error       | `boolean`              | `false`          | Error state                 |
+| disabled    | `boolean`              | `false`          | Disabled state              |
+
+### Events
+
+| Event             | Description                  |
+| ----------------- | ---------------------------- |
+| update:modelValue | Fired when page size changes |
+| change            | Fired when page size changes |
+
+### Slots
+
+| Slot   | Description                         |
+| ------ | ----------------------------------- |
+| prefix | Content displayed before the select |
+| suffix | Content displayed after the select  |
+
+</details>
+
+---
