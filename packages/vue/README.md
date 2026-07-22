@@ -1678,3 +1678,101 @@ const open = ref(false);
 </details>
 
 ---
+
+<details>
+
+<summary>
+
+# Tooltip
+
+</summary>
+
+Tooltip displays additional information when users hover or focus an element. It supports multiple placements, configurable delay, automatic viewport flipping, optional arrow, and dark mode.
+
+## Example
+
+### Basic
+
+```vue
+<Tooltip content="Save changes">
+  <Button>Save</Button>
+</Tooltip>
+```
+
+### Position
+
+```vue
+<Tooltip content="Top Left" position="top-left">
+  <Button>Top Left</Button>
+</Tooltip>
+
+<Tooltip content="Bottom Center" position="bottom-center">
+  <Button>Bottom Center</Button>
+</Tooltip>
+
+<Tooltip content="Right" position="right">
+  <Button>Right</Button>
+</Tooltip>
+```
+
+### Different Sizes
+
+```vue
+<Tooltip content="Small tooltip" size="sm">
+  <Button>Small</Button>
+</Tooltip>
+
+<Tooltip content="Medium tooltip" size="md">
+  <Button>Medium</Button>
+</Tooltip>
+
+<Tooltip content="Large tooltip" size="lg">
+  <Button>Large</Button>
+</Tooltip>
+```
+
+### Without Arrow
+
+```vue
+<Tooltip content="No arrow" :arrow="false">
+  <Button>Hover me</Button>
+</Tooltip>
+```
+
+### Custom Delay
+
+```vue
+<Tooltip content="Appears after one second" :delay="1000">
+  <Button>Hover me</Button>
+</Tooltip>
+```
+
+### Disabled
+
+```vue
+<Tooltip content="Hidden tooltip" disabled>
+  <Button>Disabled</Button>
+</Tooltip>
+```
+
+## Props
+
+| Prop     | Type                                                                                                                   | Default           | Description                          |
+| -------- | ---------------------------------------------------------------------------------------------------------------------- | ----------------- | ------------------------------------ |
+| content  | `string`                                                                                                               | **required**      | Tooltip content                      |
+| position | `"top-left" \| "top-center" \| "top-right" \| "bottom-left" \| "bottom-center" \| "bottom-right" \| "left" \| "right"` | `"bottom-center"` | Tooltip placement                    |
+| size     | `"sm" \| "md" \| "lg"`                                                                                                 | `"md"`            | Tooltip size                         |
+| delay    | `number`                                                                                                               | `200`             | Delay before showing tooltip         |
+| offset   | `number`                                                                                                               | `8`               | Distance between trigger and tooltip |
+| arrow    | `boolean`                                                                                                              | `true`            | Displays tooltip arrow               |
+| disabled | `boolean`                                                                                                              | `false`           | Disables tooltip                     |
+
+### Slots
+
+| Slot    | Description             |
+| ------- | ----------------------- |
+| default | Tooltip trigger element |
+
+</details>
+
+---

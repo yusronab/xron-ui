@@ -11,18 +11,12 @@ export const tooltipVariants = cva(
     "select-none",
     "transition-all",
     "duration-200",
-    "opacity-0",
-    "scale-95",
-    "data-[state=open]:opacity-100",
-    "data-[state=open]:scale-100",
   ],
   {
     variants: {
       size: {
         sm: "px-2 py-1 text-xs",
-
         md: "px-3 py-2 text-sm",
-
         lg: "px-4 py-3 text-base",
       },
     },
