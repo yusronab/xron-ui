@@ -17,6 +17,7 @@ import {
 } from "../../hooks";
 import type { SelectOption as Option } from "../Select";
 import { SelectOption } from "../Select/SelectOption";
+import { useFormControl } from "../FormControl/FormControl.context";
 
 export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
   (
@@ -45,6 +46,8 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     },
     ref,
   ) => {
+    const formControl = useFormControl();
+
     const rootRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -166,6 +169,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
         <div className="relative">
           <input
             ref={setRefs}
+            id={props.id ?? formControl?.id}
             value={keyword}
             placeholder={placeholder}
             disabled={disabled}

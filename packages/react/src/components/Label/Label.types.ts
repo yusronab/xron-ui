@@ -1,8 +1,3 @@
 import type { LabelHTMLAttributes } from "react";
 
-export interface LabelProps extends Omit<
-  LabelHTMLAttributes<HTMLLabelElement>,
-  "htmlFor"
-> {
-  htmlFor: string;
-}
+export interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {}

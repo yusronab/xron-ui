@@ -5,6 +5,7 @@ import { cn, normalizeFiles } from "../../utils";
 import { inputVariants } from "../../variants/input";
 
 import type { InputFileProps } from "./InputFile.types";
+import { useFormControl } from "../FormControl/FormControl.context";
 
 export const InputFile = forwardRef<HTMLInputElement, InputFileProps>(
   (
@@ -18,26 +19,23 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>(
       placeholder = "Choose file...",
       accept,
       multiple,
-
       preview = false,
       previewShape = "square",
       previewSize = 120,
-
       maxSize,
       allowedTypes,
-
       onValidationError,
       onChange,
-
       renderClearButton,
       renderFileName,
       renderIcon,
       renderPreview,
-
       ...props
     },
     ref,
   ) => {
+    const formControl = useFormControl();
+
     const inputRef = useRef<HTMLInputElement>(null);
 
     const [previewUrls, setPreviewUrls] = useState<string[]>([]);
@@ -201,6 +199,7 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>(
       <div className="w-full">
         <input
           ref={setRefs}
+          id={props.id ?? formControl?.id}
           type="file"
           className="hidden"
           accept={accept}

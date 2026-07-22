@@ -5,15 +5,19 @@ import { cn } from "../../utils";
 import { inputVariants } from "../../variants/input";
 
 import type { InputPasswordProps } from "./InputPassword.types";
+import { useFormControl } from "../FormControl/FormControl.context";
 
 export const InputPassword = forwardRef<HTMLInputElement, InputPasswordProps>(
   ({ className, size, rounded, error, disabled, ...props }, ref) => {
+    const formControl = useFormControl();
+
     const [visible, setVisible] = useState(false);
 
     return (
       <div className="relative w-full">
         <input
           ref={ref}
+          id={props.id ?? formControl?.id}
           type={visible ? "text" : "password"}
           disabled={disabled}
           className={cn(

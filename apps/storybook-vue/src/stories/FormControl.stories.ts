@@ -23,7 +23,7 @@ const meta = {
     },
 
     error: {
-      control: "text",
+      control: "boolean",
     },
 
     required: {
@@ -118,7 +118,8 @@ export const Showcase: Story = {
 
         <FormControl
           label="Email"
-          error="Email is required."
+          helper-text="Email is required."
+          error
         >
           <Input
             v-model="email"
@@ -155,6 +156,7 @@ export const HelperText: Story = {
 export const ErrorVariant: Story = {
   args: {
     label: "Email",
-    error: "Email is required.",
+    error: true,
+    helperText: "Email is required.",
   },
 };

@@ -565,7 +565,7 @@ FormControl groups a form field with its associated label, helper text, and erro
 ### Error
 
 ```vue
-<FormControl label="Email" error="Email is required.">
+<FormControl label="Email" helperText="Email is required." error>
   <Input
     v-model="email"
     error
@@ -589,7 +589,7 @@ FormControl groups a form field with its associated label, helper text, and erro
 | ---------- | --------- | ------- | ----------------------------------------------------- |
 | label      | `string`  | —       | Label displayed above the form control                |
 | helperText | `string`  | —       | Helper text displayed below the form control          |
-| error      | `string`  | —       | Error message displayed below the form control        |
+| error      | `boolean` | `false` | Error message displayed below the form control        |
 | required   | `boolean` | `false` | Displays a required indicator (`*`) next to the label |
 
 ## Slots

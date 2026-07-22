@@ -3,7 +3,7 @@ export interface FormControlProps {
 
   helperText?: string;
 
-  error?: string;
+  error?: boolean;
 
   required?: boolean;
 }

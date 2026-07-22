@@ -15,6 +15,7 @@ import {
   useKeyboardNavigation,
   useOutsideClick,
 } from "../../hooks";
+import { useFormControl } from "../FormControl/FormControl.context";
 
 export const Select = forwardRef<HTMLButtonElement, SelectProps>(
   (
@@ -42,6 +43,8 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
     },
     ref,
   ) => {
+    const formControl = useFormControl();
+
     const rootRef = useRef<HTMLDivElement>(null);
     const triggerRef = useRef<HTMLButtonElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -161,6 +164,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
       <div ref={rootRef} className="relative w-full">
         <button
           ref={setRefs}
+          id={props.id ?? formControl?.id}
           type="button"
           disabled={disabled}
           onClick={toggleDropdown}

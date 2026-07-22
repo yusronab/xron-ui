@@ -17,6 +17,7 @@ import { SelectOption } from "../Select/SelectOption";
 import { ChevronDownIcon } from "../../icons";
 import { Checkbox, CheckboxIndicator } from "../Checkbox";
 import type { SelectOption as Option } from "../Select";
+import { useFormControl } from "../FormControl/FormControl.context";
 
 export const MultiSelect = forwardRef<HTMLButtonElement, MultiSelectProps>(
   (
@@ -41,6 +42,8 @@ export const MultiSelect = forwardRef<HTMLButtonElement, MultiSelectProps>(
     },
     ref,
   ) => {
+    const formControl = useFormControl();
+
     const rootRef = useRef<HTMLDivElement>(null);
     const triggerRef = useRef<HTMLButtonElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -212,6 +215,7 @@ export const MultiSelect = forwardRef<HTMLButtonElement, MultiSelectProps>(
       <div ref={rootRef} className="relative w-full">
         <button
           ref={setRefs}
+          id={props.id ?? formControl?.id}
           type="button"
           disabled={disabled}
           onClick={toggleDropdown}

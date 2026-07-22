@@ -1757,3 +1757,78 @@ return (
 </details>
 
 ---
+
+<details>
+
+<summary>
+
+# FormControl
+
+</summary>
+
+FormControl groups related form elements with an optional label, helper text, and validation state. It automatically associates the label with supported input components using a shared context, improving accessibility and providing consistent spacing across forms.
+
+## Example
+
+### Basic
+
+```tsx
+<FormControl label="Email">
+  <Input placeholder="Enter your email" />
+</FormControl>
+```
+
+### Required
+
+```tsx
+<FormControl label="Email" required>
+  <Input placeholder="Enter your email" />
+</FormControl>
+```
+
+### Helper Text
+
+```tsx
+<FormControl label="Email" helperText="We'll never share your email.">
+  <Input />
+</FormControl>
+```
+
+### Error
+
+```tsx
+<FormControl label="Email" helperText="Email is required." error>
+  <Input error />
+</FormControl>
+```
+
+### With Select
+
+```tsx
+<FormControl label="Country" helperText="Select your country.">
+  <Select options={countries} labelKey="name" valueKey="id" />
+</FormControl>
+```
+
+### With Autocomplete
+
+```tsx
+<FormControl label="Country" helperText="Search your country.">
+  <Autocomplete options={countries} labelKey="name" valueKey="id" />
+</FormControl>
+```
+
+## Props
+
+| Prop       | Type        | Default        | Description                         |
+| ---------- | ----------- | -------------- | ----------------------------------- |
+| id         | `string`    | Auto generated | Input id used for accessibility     |
+| label      | `ReactNode` | -              | Displays a label above the control  |
+| helperText | `ReactNode` | -              | Displays helper or validation text  |
+| required   | `boolean`   | `false`        | Displays required indicator         |
+| error      | `boolean`   | `false`        | Displays helper text in error state |
+| children   | `ReactNode` | **required**   | Form control content                |
+
+</details>
+
+---

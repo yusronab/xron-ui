@@ -29,11 +29,7 @@ provide(formControlKey, {
 
     <slot />
 
-    <HelperText v-if="error" error>
-      {{ error }}
-    </HelperText>
-
-    <HelperText v-else-if="helperText">
+    <HelperText v-if="helperText" :error="error">
       {{ helperText }}
     </HelperText>
   </div>
