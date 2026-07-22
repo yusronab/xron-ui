@@ -36,3 +36,6 @@ export type { ChevronsUpDownIconProps } from "./ChevronsUpDownIcon";
 
 export { MinusIcon } from "./MinusIcon";
 export type { MinusIconProps } from "./MinusIcon";
+
+export { AvatarIcon } from "./AvatarIcon";
+export type { AvatarIconProps } from "./AvatarIcon";

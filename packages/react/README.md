@@ -51,6 +51,7 @@ Form
 - [Input](#input)
 - [InputPassword](#inputpassword)
 - [InputFile](#inputfile)
+- [Label](#label)
 - [MultiSelect](#multiselect)
 - [Radio](#radio)
 - [Select](#select)
@@ -59,6 +60,7 @@ Form
 
 UI
 
+- [Avatar](#avatar)
 - [Badge](#badge)
 - [Button](#button)
 - [Modal](#modal)
@@ -2005,6 +2007,141 @@ Text renders semantic typography elements with consistent styling. It supports h
 | loading       | `boolean`                                                                           | `false`  | Display Skeleton instead of text |
 | skeletonLines | `number`                                                                            | `1`      | Number of skeleton lines         |
 | skeletonWidth | `number \| string`                                                                  | `"100%"` | Skeleton width                   |
+
+</details>
+
+---
+
+<details>
+
+<summary>
+
+# Avatar
+
+</summary>
+
+Avatar displays a user's profile image, initials, or a fallback icon. It supports multiple sizes, rounded styles, loading state with Skeleton, and automatic fallback when the image cannot be loaded.
+
+## Example
+
+### Basic
+
+```tsx
+<Avatar />
+```
+
+### Image
+
+```tsx
+<Avatar src="/avatar.jpg" alt="John Doe" />
+```
+
+### Initials
+
+```tsx
+<Avatar name="John Doe" />
+```
+
+### Rounded
+
+```tsx
+<Avatar src="/avatar.jpg" rounded />
+```
+
+### Sizes
+
+```tsx
+<Avatar size="xs" />
+
+<Avatar size="sm" />
+
+<Avatar size="md" />
+
+<Avatar size="lg" />
+
+<Avatar size="xl" />
+```
+
+### Loading
+
+```tsx
+<Avatar loading />
+
+<Avatar
+  loading
+  rounded
+  size="lg"
+/>
+```
+
+## Props
+
+| Prop    | Type                                   | Default | Description                                         |
+| ------- | -------------------------------------- | ------- | --------------------------------------------------- |
+| src     | `string`                               | -       | Image source                                        |
+| alt     | `string`                               | -       | Image alt text                                      |
+| name    | `string`                               | -       | Used to generate initials when image is unavailable |
+| loading | `boolean`                              | `false` | Displays a Skeleton instead of the avatar           |
+| size    | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"`  | Avatar size                                         |
+| rounded | `boolean`                              | `false` | Fully rounded avatar                                |
+
+</details>
+
+---
+
+<details>
+
+<summary>
+
+# Label
+
+</summary>
+
+Label provides an accessible text description for form controls. It is commonly used with inputs, textareas, selects, checkboxes, radios, and other form elements through the `htmlFor` attribute.
+
+## Example
+
+### Basic
+
+```tsx
+<Label htmlFor="email">
+  Email Address
+</Label>
+
+<Input
+  id="email"
+  placeholder="Enter your email"
+/>
+```
+
+### Custom Style
+
+```tsx
+<Label
+  htmlFor="username"
+  className="text-red-600"
+>
+  Required Field
+</Label>
+
+<Input id="username" />
+```
+
+### With FormControl
+
+```tsx
+<FormControl label="Email Address" helperText="We'll never share your email.">
+  <Input placeholder="Enter your email" />
+</FormControl>
+```
+
+## Props
+
+| Prop      | Type        | Default | Description                                          |
+| --------- | ----------- | ------- | ---------------------------------------------------- |
+| htmlFor   | `string`    | -       | Associates the label with a form control by its `id` |
+| children  | `ReactNode` | -       | Label content                                        |
+| className | `string`    | -       | Additional CSS classes                               |
 
 </details>
 

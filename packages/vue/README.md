@@ -48,6 +48,7 @@ Form
 - [InputPassword](#inputpassword)
 - [InputFile](#inputfile)
 - [Label](#label)
+- [MultiSelect](#multiselect)
 - [Radio](#radio)
 - [Select](#select)
 - [Switch](#switch)
@@ -55,10 +56,13 @@ Form
 
 UI
 
+- [Avatar](#avatar) ❌️
 - [Badge](#badge)
 - [Button](#button)
 - [Modal](#modal)
+- [Skeleton](#skeleton) ❌️
 - [Spinner](#spinner)
+- [Text](#text) ❌️
 - [Tooltip](#tooltip)
 
 Table
