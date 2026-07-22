@@ -1353,3 +1353,91 @@ PageSize allows users to select the number of items displayed per page. It is bu
 </details>
 
 ---
+
+<details>
+
+<summary>
+
+# Pagination
+
+</summary>
+
+Pagination allows users to navigate through multiple pages of data. It supports first/previous/next/last navigation, configurable sibling count, customizable button styles, and integrates with PageSize for complete table pagination.
+
+## Example
+
+### Basic
+
+```tsx
+<Pagination
+  :page="page"
+  :page-size="pageSize"
+  :total="100"
+  @page-change="page = $event"
+/>
+```
+
+### Custom Button Style
+
+```tsx
+<Pagination
+  :page="page"
+  :page-size="pageSize"
+  :total="100"
+  buttonVariant="secondary"
+  buttonSize="sm"
+  buttonRounded
+  @page-change="page = $event"
+/>
+```
+
+### Sibling Count
+
+```tsx
+<Pagination
+  :page="page"
+  :page-size="pageSize"
+  :total="100"
+  :sibling-count="2"
+  @page-change="page = $event"
+/>
+```
+
+### With PageSize
+
+```vue
+<div class="flex items-center justify-between">
+  <PageSize
+    v-model="pageSize"
+  />
+
+  <Pagination
+    :page="page"
+    :page-size="pageSize"
+    :total="250"
+    @page-change="page = $event"
+  />
+</div>
+```
+
+## Props
+
+| Prop          | Type                                                             | Default      | Description                                     |
+| ------------- | ---------------------------------------------------------------- | ------------ | ----------------------------------------------- |
+| page          | `number`                                                         | **required** | Current page                                    |
+| pageSize      | `number`                                                         | **required** | Items per page                                  |
+| total         | `number`                                                         | **required** | Total number of items                           |
+| siblingCount  | `number`                                                         | `1`          | Number of visible pages beside the current page |
+| buttonVariant | `"primary" \| "secondary" \| "success" \| "warning" \| "danger"` | `"primary"`  | Pagination button variant                       |
+| buttonSize    | `"sm" \| "md" \| "lg"`                                           | `"md"`       | Pagination button size                          |
+| buttonRounded | `boolean`                                                        | `false`      | Fully rounded pagination buttons                |
+
+### Events
+
+| Event      | Description                         |
+| ---------- | ----------------------------------- |
+| pageChange | Fired when the current page changes |
+
+</details>
+
+---

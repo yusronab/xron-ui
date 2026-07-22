@@ -18,6 +18,7 @@ export * from "./components/Label";
 export * from "./components/MultiSelect";
 
 export * from "./components/PageSize";
+export * from "./components/Pagination";
 
 export * from "./components/Radio";
 
