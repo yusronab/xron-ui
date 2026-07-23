@@ -10,7 +10,10 @@
     "build-storybook:react": "pnpm --filter storybook build-storybook",
     "build:vue": "pnpm --filter vue build",
     "storybook:vue": "pnpm --filter storybook-vue storybook",
-    "build-storybook:vue": "pnpm --filter storybook-vue build-storybook"
+    "build-storybook:vue": "pnpm --filter storybook-vue build-storybook",
+    "build:angular": "pnpm --filter angular build",
+    "storybook:angular": "pnpm --filter storybook-angular storybook",
+    "build-storybook:angular": "pnpm --filter storybook-angular build-storybook"
   },
   "keywords": [],
   "author": "",

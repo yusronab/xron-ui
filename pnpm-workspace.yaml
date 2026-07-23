@@ -4,6 +4,8 @@ packages:
 allowBuilds:
   '@parcel/watcher': true
   esbuild: true
+  lmdb: true
+  msgpackr-extract: true
 minimumReleaseAgeExclude:
   - '@storybook/addon-docs@10.5.2'
   - '@storybook/builder-vite@10.5.2'
