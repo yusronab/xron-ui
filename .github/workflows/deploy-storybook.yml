@@ -48,6 +48,12 @@ jobs:
       - name: Build Vue Storybook
         run: pnpm --filter storybook-vue build-storybook
 
+      - name: Build Angular package
+        run: pnpm --filter ./packages/angular build
+
+      - name: Build Angular Storybook
+        run: pnpm --filter storybook-angular build-storybook
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

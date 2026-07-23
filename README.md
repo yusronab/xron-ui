@@ -8,11 +8,11 @@ Currently available on npm:
 
 - [`@xron-ui/react`](https://www.npmjs.com/package/@xron-ui/react)
 - [`@xron-ui/vue`](https://www.npmjs.com/package/@xron-ui/vue)
+- [`@xron-ui/angular`](https://www.npmjs.com/package/@xron-ui/angular)
 
 Planned packages:
 
 - `@xron-ui/svelte`
-- `@xron-ui/angular`
 - `@xron-ui/solid`
 
 ## Project Structure
@@ -21,10 +21,12 @@ Planned packages:
 .
 ├── apps/
 │   ├── storybook/
-│   └── storybook-vue/
+│   ├── storybook-vue/
+│   └── storybook-angular/
 ├── packages/
 │   ├── react/
-│   └── vue/
+│   ├── vue/
+│   └── angular/
 ├── package.json
 ├── pnpm-workspace.yaml
 └── pnpm-lock.yaml
