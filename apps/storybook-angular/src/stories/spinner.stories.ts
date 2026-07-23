@@ -8,6 +8,7 @@ const meta: Meta<Spinner> = {
   tags: ['autodocs'],
   render: (args) => ({
     props: args,
+    imports: [Spinner],
     template: `
       <xr-spinner
         [size]="size"

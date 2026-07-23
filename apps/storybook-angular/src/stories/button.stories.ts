@@ -8,6 +8,7 @@ const meta: Meta<Button> = {
   tags: ['autodocs'],
   render: (args) => ({
     props: args,
+    imports: [Button],
     template: `
       <xr-button
         [variant]="variant"
