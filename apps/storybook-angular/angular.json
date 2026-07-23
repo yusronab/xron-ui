@@ -100,8 +100,7 @@
           "options": {
             "configDir": ".storybook",
             "browserTarget": "storybook-angular:build",
-            "outputDir": "../../dist/angular",
-            "baseHref": "/xron-ui/angular/"
+            "outputDir": "../../dist/angular"
           }
         }
       }

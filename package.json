@@ -13,7 +13,8 @@
     "build-storybook:vue": "pnpm --filter storybook-vue build-storybook",
     "build:angular": "pnpm --filter angular build",
     "storybook:angular": "pnpm --filter storybook-angular storybook",
-    "build-storybook:angular": "pnpm --filter storybook-angular build-storybook"
+    "build-storybook:angular": "pnpm --filter storybook-angular build-storybook",
+    "clean": "rm -rf dist"
   },
   "keywords": [],
   "author": "",
