@@ -66,6 +66,7 @@ type Story = StoryObj<Button>;
 
 export const Showcase: Story = {
   render: () => ({
+    imports: [Button],
     template: `
       <div class="space-y-8">
 
